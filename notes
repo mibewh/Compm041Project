@@ -1,0 +1,5 @@
+1. what do they mean by "average CTR cases"
+    - logical way to seperate it is by advertisers, right now just averaging across the whole set
+2. what is the bid price for the average CTR cases
+    - should we be looking at bid price or pay price
+        - bid price may be more relective of what the advertisiers value the ad spot at

@@ -1,0 +1,22 @@
+Tuning Required:
+- linear model parameters (weekday, slot format, etc.)
+    - which do we include?
+    - how do we include text?
+- pCTR estimation
+    - linear model or something else?
+    - Email questions
+- base-bid determination
+    - experimentation based? See email response for clarification
+- random bid
+    - Improve upper bound (currently just the average plus standard deviation)
+    - Going over budget
+- constant bid
+    - Improve bid amount (currently just the average)
+    - Going over budget
+
+Incomplete:
+- Bidding strategy
+- Write up
+- Individual models
+
+Completed:
