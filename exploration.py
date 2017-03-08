@@ -1,7 +1,7 @@
 import csv
 from collections import namedtuple
 from common import Data
-#from sets import Set
+
 
 
 '''
@@ -10,5 +10,15 @@ from common import Data
 'payprice', 'keypage', 'advertiser', 'usertag'
 '''
 
-for bid in Data('dataset/validation.csv'):
-    print(bid.bidprice)
+trainAdvertisers = set()
+for bid in Data('dataset/train.csv'):
+    trainAdvertisers.add(bid.advertiser)
+testAdvertisers = set()
+for bid in Data('dataset/test.csv'):
+    testAdvertisers.add(bid.advertiser)
+
+for a in trainAdvertisers:
+    print(a)
+print()
+for a in testAdvertisers:
+    print(a)

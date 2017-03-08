@@ -11,7 +11,7 @@ def calculateUpperBound(trainFileName):
 
 upper = calculateUpperBound('dataset/train.csv')
 
-def getBidPrice():
+def getBidPrice(bid):
     return upper * random.random()
 
 print('Random Upper Bound: %d' % upper)

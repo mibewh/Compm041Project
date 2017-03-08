@@ -27,14 +27,14 @@ class OutFile:
     def addRow(self, bidid, bidprice):
         self.writer.writerow((bidid,bidrow))
 
-def evaluate(validateFileName, getBidPrice):
+def evaluate(validateFileName, getBidPrice, *args):
     numBids = 0
     wins = 0
     clicks = 0
     cost = 0
     for bid in Data(validateFileName):
         numBids += 1
-        if getBidPrice() > int(bid.payprice): # and (cost + int(row.payprice)) <= 25000:
+        if getBidPrice(bid, *args) > int(bid.payprice): # and (cost + int(row.payprice)) <= 25000:
             wins += 1
             clicks += int(bid.click)
             cost += int(bid.payprice)
@@ -42,9 +42,9 @@ def evaluate(validateFileName, getBidPrice):
     print('Win percentage: %f' % (wins / numBids))
     print('CTR: %f' % (clicks / numBids))
     print('Conversions: %d' % (clicks))
-    print('Whats the difference between CTR and CVR???')
+    print('Whats the difference between CTR and CVR???') # I think they're the same
     print('Spend: %d' % cost)
-    print('Average CPM???')
+    print('Average CPM???') # Average bid price / pay price?
     print('Average CPC: %f' % (clicks / cost))
 
 
@@ -54,3 +54,4 @@ def evaluate(validateFileName, getBidPrice):
 #Is there a better way to find the optimal constant bid? Also, do I just bid until I run out of money / is the budget in the doc right?
 #One standard deviation above mean to find the random upper parameter?
 #CVR??? CPM???
+# What is an average CTR case?

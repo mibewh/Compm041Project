@@ -16,7 +16,7 @@ def calculateBidPrice(trainFileName):
 
 bidAmount = calculateBidPrice('dataset/train.csv')
 
-def getBidPrice():
+def getBidPrice(bid):
     return bidAmount
 
 
