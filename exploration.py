@@ -1,5 +1,6 @@
 import csv
 from collections import namedtuple
+from common import Data
 #from sets import Set
 
 
@@ -9,10 +10,5 @@ from collections import namedtuple
 'payprice', 'keypage', 'advertiser', 'usertag'
 '''
 
-fileName = 'dataset/test.csv'
-with open(fileName, 'rt') as f:
-    reader = csv.reader(f)
-    Row = namedtuple('Row', next(reader)) #Create tuple from header row
-    print(Row._fields)
-    for row in map(Row._make, reader):
-        pass
+for bid in Data('dataset/validation.csv'):
+    print(bid.bidprice)
