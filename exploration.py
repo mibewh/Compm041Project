@@ -10,15 +10,14 @@ from common import Data
 'payprice', 'keypage', 'advertiser', 'usertag'
 '''
 
-trainAdvertisers = set()
+vis = set()
+vis2 = set()
+vis3 = set()
 for bid in Data('dataset/train.csv'):
-    trainAdvertisers.add(bid.advertiser)
-testAdvertisers = set()
+    vis.add(bid.slotvisibility)
 for bid in Data('dataset/test.csv'):
-    testAdvertisers.add(bid.advertiser)
-
-for a in trainAdvertisers:
-    print(a)
-print()
-for a in testAdvertisers:
-    print(a)
+    vis2.add(bid.slotvisibility)
+for bid in Data('dataset/validation.csv'):
+    vis3.add(bid.slotvisibility)
+print(vis2.issubset(vis))
+print(vis3.issubset(vis))

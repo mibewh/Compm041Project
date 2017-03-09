@@ -28,30 +28,29 @@ class OutFile:
         self.writer.writerow((bidid,bidrow))
 
 def evaluate(validateFileName, getBidPrice, *args):
-    numBids = 0
-    wins = 0
+    bidsPlaced = 0
+    numWins = 0
     clicks = 0
-    cost = 0
+    spent = 0
     for bid in Data(validateFileName):
-        numBids += 1
-        if getBidPrice(bid, *args) > int(bid.payprice): # and (cost + int(row.payprice)) <= 25000:
-            wins += 1
-            clicks += int(bid.click)
-            cost += int(bid.payprice)
+        bidAmt = getBidPrice(bid, *args)
+        if (spent + bidAmt) <= 25000: #Would not place bid if the bid amount surpasses the budget
+            bidsPlaced += 1 # Only
+            if bidAmt > int(bid.payprice):
+                numWins += 1
+                clicks += int(bid.click)
+                spent += int(bid.payprice)
 
-    print('Win percentage: %f' % (wins / numBids))
-    print('CTR: %f' % (clicks / numBids))
+    print('Win proportion: %f' % (numWins / bidsPlaced))
+    print('Wins: %d' % numWins)
+    print('CTR: %f' % (clicks / numWins)) #Only need to consider the ads we paid for
     print('Conversions: %d' % (clicks))
-    print('Whats the difference between CTR and CVR???') # I think they're the same
-    print('Spend: %d' % cost)
-    print('Average CPM???') # Average bid price / pay price?
-    print('Average CPC: %f' % (clicks / cost))
+    print('Spend: %d' % spent)
+    print('Average CPM: %f' % (spent / numWins)) # Average bid price / pay price?
+    print('Average CPC: %f' % (clicks / spent))
 
 
 
 
-#FOR LATER: How do I calculate pCTR? Is it found on a bid-by-bid basis, or for the whole set, like the average?
 #Is there a better way to find the optimal constant bid? Also, do I just bid until I run out of money / is the budget in the doc right?
 #One standard deviation above mean to find the random upper parameter?
-#CVR??? CPM???
-# What is an average CTR case?
