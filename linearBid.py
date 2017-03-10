@@ -24,6 +24,7 @@ def convertBidArr(bid):
     if bid.slotformat == 'Na': bid = bid._replace(slotformat=np.nan)
     if bid.adexchange == 'null': bid = bid._replace(adexchange=np.nan)
     bid = bid._replace(useragent=agents[bid.useragent], slotvisibility=visibility[bid.slotvisibility])
+    # Add back useragent to the return statement AND ohe if you want it in
     return np.array([bid.weekday,bid.hour,bid.region,bid.city,bid.useragent\
                 ,bid.advertiser, bid.slotformat, bid.adexchange, bid.slotvisibility\
                 ,bid.slotwidth,bid.slotheight,bid.slotprice], dtype=np.float32)
