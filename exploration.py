@@ -10,14 +10,10 @@ from common import Data
 'payprice', 'keypage', 'advertiser', 'usertag'
 '''
 
-vis = set()
-vis2 = set()
-vis3 = set()
-for bid in Data('dataset/train.csv'):
-    vis.add(bid.slotvisibility)
-for bid in Data('dataset/test.csv'):
-    vis2.add(bid.slotvisibility)
+clicks = 0
+total = 0
 for bid in Data('dataset/validation.csv'):
-    vis3.add(bid.slotvisibility)
-print(vis2.issubset(vis))
-print(vis3.issubset(vis))
+    if(bid.click=='1'): clicks+=1
+    total += 1
+print(clicks)
+print(total)
