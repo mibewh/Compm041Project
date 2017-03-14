@@ -1,4 +1,4 @@
-from common import Data, evaluate
+from common import Data, evaluate, evaluate_bulk
 from sklearn import linear_model
 from sklearn.ensemble import RandomForestClassifier
 import numpy as np
@@ -15,11 +15,16 @@ cacheFile = 'dataset/cacheFile'
 #Instead of imputing on the missing fields, they are set up as their own category
 #Seems to run faster, although evaluation still takes forever, with similar success
 vec = DictVectorizer()
-kbest = SelectKBest(chi2, k=20)
+kbest = SelectKBest(chi2, k=100)
 
 def convertBidArr(bid):
     arr = vec.transform(convertBidDict(bid))[0]
-    # arr = kbest.transform(arr)
+    arr = kbest.transform(arr)
+    return arr
+
+def convertBidArrBulk(bids):
+    arr = vec.transform([convertBidDict(bid) for bid in bids])
+    arr = kbest.transform(arr)
     return arr
 
 def convertBidDict(bid):
@@ -42,17 +47,17 @@ def learnModel(trainFileName, fromCache=False):
         xdata.append(convertBidDict(bid))
         ydata.append(int(bid.click))
     print('Preprocessing...')
-    xarr = vec.fit_transform(xdata)
     yarr = np.array(ydata)
-    rus = RandomUnderSampler()
-    xarr, yarr = rus.fit_sample(xarr, yarr)
-    # xarr = kbest.fit_transform(xarr, yarr) # Limit to k best features
+    # rus = RandomUnderSampler()
+    # xdata, yarr = rus.fit_sample(xdata, yarr)
+    xarr = vec.fit_transform(xdata)
+    xarr = kbest.fit_transform(xarr, yarr) # Limit to k best features
     avgCTR = np.average(yarr)
     print('Learning...')
-    # model = linear_model.LogisticRegression(C=1, n_jobs=-1)
-    model = RandomForestClassifier(n_estimators=10, n_jobs=-1)
+    # model = linear_model.LogisticRegression()
+    model = RandomForestClassifier(n_estimators=100, n_jobs=-1, class_weight='balanced')
     model.fit(xarr, yarr)
-    pickle.dump((model,vec,avgCTR), open(cacheFile, 'wb'))
+    # pickle.dump((model,vec,avgCTR), open(cacheFile, 'wb'))
     return model, avgCTR
 
 def calculateBid(bid, baseBid, model, averageCTR):
@@ -60,11 +65,17 @@ def calculateBid(bid, baseBid, model, averageCTR):
     pCTR = model.predict_proba(arr)[0][1]
     return baseBid * pCTR / averageCTR
 
+def calculateBids(bids, baseBid, model, averageCTR):
+    arr = convertBidArrBulk(bids)
+    probs = model.predict_proba(arr)
+    pCTR = probs[:, 1]
+    print(pCTR)
+    return baseBid * pCTR / averageCTR
 
 model, avgCTR = learnModel('dataset/train.csv', fromCache=False)
-baseBid = 150
-print('Evaluating (%d)...' % baseBid)
-evaluate('dataset/validation.csv', calculateBid, baseBid, model, avgCTR)
+baseBid = 0.5
+print('Evaluating (%f)...' % baseBid)
+evaluate_bulk('dataset/validation.csv', calculateBids, baseBid, model, avgCTR)
 # for baseBid in range(50, 400, 50):
 #     print('Evaluating (%d)...' % baseBid)
 #     evaluate('dataset/validation.csv', calculateBid, baseBid, model, avgCTR)
