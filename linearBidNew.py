@@ -5,7 +5,7 @@ import numpy as np
 import pickle
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.feature_selection import SelectKBest, chi2
-#from imblearn.under_sampling import RandomUnderSampler
+from imblearn.under_sampling import RandomUnderSampler
 
 # Useful for dealing with categorical features (OneHot) and impressions with missing values
 # http://scikit-learn.org/stable/modules/preprocessing.html
@@ -33,6 +33,14 @@ def convertBidDict(bid):
             'adexchange':bid.adexchange, 'slotvisibility':bid.slotvisibility,\
             'slotwidth':int(bid.slotwidth), 'slotheight':int(bid.slotheight), 'slotprice':int(bid.slotprice)}
 
+def undersample(xdata, yarr):
+    numOnes = np.sum(yarr)
+    inds = np.arange(0, len(xdata)).reshape(-1,1)
+    rus = RandomUnderSampler()
+    inds, yarr = rus.fit_sample(inds, yarr)
+    xarr = np.array(xdata)
+    xdata = xarr[inds].reshape(-1).tolist()
+    return xdata, yarr
 
 def learnModel(trainFileName, fromCache=False):
     global vec, kbest
@@ -48,8 +56,7 @@ def learnModel(trainFileName, fromCache=False):
         ydata.append(int(bid.click))
     print('Preprocessing...')
     yarr = np.array(ydata)
-    # rus = RandomUnderSampler()
-    # xdata, yarr = rus.fit_sample(xdata, yarr)
+    xdata, yarr = undersample(xdata, yarr)
     xarr = vec.fit_transform(xdata)
     xarr = kbest.fit_transform(xarr, yarr) # Limit to k best features
     avgCTR = np.average(yarr)
@@ -73,7 +80,7 @@ def calculateBids(bids, baseBid, model, averageCTR):
     return baseBid * pCTR / averageCTR
 
 model, avgCTR = learnModel('dataset/train.csv', fromCache=False)
-baseBid = 0.5
+baseBid = 150
 print('Evaluating (%f)...' % baseBid)
 evaluate_bulk('dataset/validation.csv', calculateBids, baseBid, model, avgCTR)
 # for baseBid in range(50, 400, 50):
