@@ -32,7 +32,11 @@ def evaluate(validateFileName, getBidPrice, *args):
     numWins = 0
     clicks = 0
     spent = 0
+    count = 0
     for bid in Data(validateFileName):
+        count+=1
+        if (count % 500 == 1):
+            print (count)
         bidAmt = getBidPrice(bid, *args)
         if (spent + bidAmt) <= 25000: #Would not place bid if the bid amount surpasses the budget
             bidsPlaced += 1

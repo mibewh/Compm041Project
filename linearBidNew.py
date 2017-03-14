@@ -5,7 +5,7 @@ import numpy as np
 import pickle
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.feature_selection import SelectKBest, chi2
-from imblearn.under_sampling import RandomUnderSampler
+#from imblearn.under_sampling import RandomUnderSampler
 
 # Useful for dealing with categorical features (OneHot) and impressions with missing values
 # http://scikit-learn.org/stable/modules/preprocessing.html
@@ -15,7 +15,7 @@ cacheFile = 'dataset/cacheFile'
 #Instead of imputing on the missing fields, they are set up as their own category
 #Seems to run faster, although evaluation still takes forever, with similar success
 vec = DictVectorizer()
-kbest = SelectKBest(chi2, k=100)
+kbest = SelectKBest(chi2, k=10)
 
 def convertBidArr(bid):
     arr = vec.transform(convertBidDict(bid))[0]
@@ -55,7 +55,7 @@ def learnModel(trainFileName, fromCache=False):
     avgCTR = np.average(yarr)
     print('Learning...')
     # model = linear_model.LogisticRegression()
-    model = RandomForestClassifier(n_estimators=100, n_jobs=-1, class_weight='balanced')
+    model = RandomForestClassifier(n_estimators=10, n_jobs=-1, class_weight='balanced')
     model.fit(xarr, yarr)
     # pickle.dump((model,vec,avgCTR), open(cacheFile, 'wb'))
     return model, avgCTR
