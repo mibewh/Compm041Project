@@ -53,6 +53,7 @@ def evaluate(validateFileName, getBidPrice, *args):
     print('Average CPM: %f' % (spent / numWins)) # Average bid price / pay price?
     print('Average CPC: %f' % (clicks / spent))
 
+
 def evaluate_bulk(validateFileName, getBidPrices, *args):
     bids = []
     actual = []
@@ -65,6 +66,7 @@ def evaluate_bulk(validateFileName, getBidPrices, *args):
     numWins = 0
     clicks = 0
     spent = 0
+    clicksMissed = 0
     for i in range(len(actual)):
         bidAmt = guesses[i]
         payprice = actual[i]
@@ -75,9 +77,14 @@ def evaluate_bulk(validateFileName, getBidPrices, *args):
                 numWins += 1
                 clicks += int(bid.click)
                 spent += int(bid.payprice)
+            else:
+                if bid.click == '1':
+                    print(bidAmt, payprice)
+                    clicksMissed += 1
 
-    print('Win proportion: %f' % (numWins / bidsPlaced))
+    print('Bids Placed: %d' % bidsPlaced)
     print('Wins: %d' % numWins)
+    print('Clicks Missed: %d' % clicksMissed)
     print('CTR: %f' % (clicks / numWins)) #Only need to consider the ads we paid for
     print('Conversions: %d' % (clicks))
     print('Spend: %d' % spent)
