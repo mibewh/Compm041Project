@@ -26,7 +26,9 @@ import numpy as np
 # print(browser)
 
 clicks = 0
+paid = 0
 for bid in Data('dataset/validation.csv'):
     if bid.click=='1':
-        if int(bid.payprice) < 10: clicks += 1
-print(clicks)
+        paid += int(bid.payprice)
+        clicks+=1
+print(paid / clicks)

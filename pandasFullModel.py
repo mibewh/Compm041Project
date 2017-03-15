@@ -6,13 +6,19 @@ from sklearn.feature_extraction import DictVectorizer
 from sklearn.feature_selection import SelectKBest, chi2
 from sklearn_pandas import DataFrameMapper
 
+import matplotlib.pyplot as plt
+from sklearn.svm import SVC
+from sklearn.model_selection import StratifiedKFold
+from sklearn.feature_selection import RFECV
+
 trainFile = 'dataset/train.csv'
 validateFile = 'dataset/validation.csv'
-BALANCED = 'balanced'
+BALANCED = None #'balanced'
 K_FEATS = 100
-ZERO_MULT = 1
+ZERO_MULT = 15
 C = 1
 BASE_BID = 5
+MODEL_CONST = 1e4
 
 dv = DictVectorizer()
 kbest = SelectKBest(chi2, k=K_FEATS)
@@ -30,11 +36,14 @@ def undersample(data, zeroMult=1):
 
 def getFeatures(data, fit=False):
     global dv, kbest
-    metrics = ['click','bidprice','payprice']
+    metrics = ['click','payprice']
+    # Stratify useragent into os and browser
+    agent_info = pd.DataFrame(np.array([[item for item in agent.split('_')] for agent in data.useragent]), columns=['os','browser'])
+    data = data.drop('useragent',axis=1).join(agent_info)
     if fit:
-        vec_df = pd.DataFrame(dv.fit_transform(data[columns].to_dict(orient='records')).toarray())
+        vec_df = pd.DataFrame(dv.fit_transform(data.to_dict(orient='records')).toarray())
     else:
-        vec_df = pd.DataFrame(dv.transform(data[columns].to_dict(orient='records')).toarray())
+        vec_df = pd.DataFrame(dv.transform(data.to_dict(orient='records')).toarray())
     vec_df.columns = dv.get_feature_names()
     vec_df.index = data.index
     #Reduce the feature space manually? As in get reduce to a bit for each browser, device type
@@ -59,7 +68,12 @@ def loadData(fileName, train=False):
 
 def getPredictions(model, features, avgCTR):
     pCTR = model.predict_proba(features)[:, 1]
+    print(pCTR)
     return BASE_BID * pCTR / avgCTR
+
+def getPredictionsORTB1(model, features, avgCTR):
+    pCTR = model.predict_proba(features)[:, 1]
+    return np.sqrt(MODEL_CONST / 0.007 * pCTR + MODEL_CONST**2) - MODEL_CONST
 
 train_df, train_features = loadData(trainFile, train=True)
 avgCTR = train_df['click'].mean() # Average ctr of reduced (if performed) data set
@@ -72,7 +86,8 @@ model.fit(train_features, train_df.click)
 #Evalute Model on validation set
 print('Evaluating...')
 val_df, val_features = loadData(validateFile, train=False)
-guesses = getPredictions(model, val_features, avgCTR)
+# guesses = getPredictions(model, val_features, avgCTR)
+guesses = getPredictionsORTB1(model, val_features, avgCTR)
 print(guesses)
 bidsPlaced = 0
 numWins = 0

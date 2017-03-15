@@ -9,7 +9,7 @@ from sklearn_pandas import DataFrameMapper
 trainFile = 'dataset/train.csv'
 validateFile = 'dataset/validation.csv'
 BALANCED = 'balanced'
-K_FEATS = 100
+K_FEATS = 20
 ZERO_MULT = 1
 C = 1
 BASE_BID = 5
@@ -46,7 +46,6 @@ def getFeatures(data, fit=False):
     else:
         features = kbest_mapper.transform(vec_df.drop(metrics,axis=1))
     features_df = pd.DataFrame(features, columns=vec_df.columns[kbest.get_support(indices=True)])
-    print(features_df.columns)
     return features
 
 def loadData(fileName, train=False):
