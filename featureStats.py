@@ -1,8 +1,8 @@
-import csv
-from collections import namedtuple
-from logisticCommon import Data
+from logisticCommon import Data, evaluate, evaluate_bulk
+from sklearn import linear_model
+from sklearn.ensemble import RandomForestClassifier
 import numpy as np
-from scipy.stats import pearsonr
+import pickle
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.feature_selection import SelectKBest, chi2
 from imblearn.under_sampling import RandomUnderSampler
@@ -26,23 +26,15 @@ def convertBidArrBulk(bids):
     #arr = kbest.transform(arr)
     return arr
 
+def removeFeatures():
+
 def convertBidDict(bid):
     return {'weekday':bid.weekday, 'hour':bid.hour, 'region':bid.region, 'city':bid.city,\
             'useragent':bid.useragent, 'advertiser':bid.advertiser, 'slotformat':bid.slotformat,\
             'adexchange':bid.adexchange, 'slotvisibility':bid.slotvisibility,\
             'slotwidth':int(bid.slotwidth), 'slotheight':int(bid.slotheight), 'slotprice':int(bid.slotprice)}
 
-def undersample(xdata, yarr):
-    numOnes = np.sum(yarr)
-    inds = np.arange(0, len(xdata)).reshape(-1,1)
-    rus = RandomUnderSampler() # #1/#0
-    inds, yarr = rus.fit_sample(inds, yarr)
-    xarr = np.array(xdata)
-    xdata = xarr[inds].reshape(-1).tolist()
-    return xdata, yarr
-
 def loadData(trainFileName):
-    global vec, kbest
     print('Loading Data...')
     xdata = []
     ydata = []
@@ -52,22 +44,18 @@ def loadData(trainFileName):
     return xdata, ydata
 
 
-
-'''
-'click', 'weekday', 'hour', 'bidid', 'logtype', 'userid', 'useragent', 'IP', 'region', 'city', 'adexchange', 'domain',
-'url', 'urlid', 'slotid', 'slotwidth', 'slotheight', 'slotvisibility', 'slotformat', 'slotprice', 'creative', 'bidprice',
-'payprice', 'keypage', 'advertiser', 'usertag'
-'''
-
-clicks = 0
-total = 0
-for bid in Data('dataset/validation.csv'):
-    if(bid.click=='1'): clicks+=1
-    total += 1
-print(clicks)
-print(total)
-np.random.seed(0)
-size = 300
-x = np.random.normal(0, 1, size)
-print "Lower noise", pearsonr(x, x + np.random.normal(0, 1, size))
-print "Higher noise", pearsonr(x, x + np.random.normal(0, 10, size))
+xaxis = []
+values = []
+#kbest = SelectKBest(chi2, k=20)
+xdata, ydata = loadData('dataset/train.csv')
+#baseBid = 6.5 
+for baseBid in np.arange(0.01,10.1,0.01):
+    model, avgCTR, score = learnModel(xdata,ydata)
+    print('Evaluating (%f)...' % baseBid)
+    values.append(evaluate_bulk('dataset/validation.csv', calculateBids, baseBid, model, avgCTR))
+    print('Score: ', score)
+print(xaxis)
+print(values)
+plt.plot(xaxis,values,'ro')
+plt.axis([0.01,10.1,0,227])
+plt.show()

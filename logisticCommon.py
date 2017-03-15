@@ -36,8 +36,6 @@ def evaluate(validateFileName, getBidPrice, *args):
     count = 0
     for bid in Data(validateFileName):
         count+=1
-        if (count % 500 == 1):
-            print (count)
         bidAmt = getBidPrice(bid, *args)
         if (spent + bidAmt) <= 25000: #Would not place bid if the bid amount surpasses the budget
             bidsPlaced += 1
@@ -54,42 +52,45 @@ def evaluate(validateFileName, getBidPrice, *args):
     print('Average CPM: %f' % (spent / numWins)) # Average bid price / pay price?
     print('Average CPC: %f' % (clicks / spent))
 
-def evaluate_bulk(validateFileName, getBidPrices, *args):
+def evaluate_bulk(validateFileName, baseBid, getBidPrices, *args):
+    
     bids = []
     actual = []
     for bid in Data(validateFileName):
         bids.append(bid)
         actual.append(int(bid.payprice))
-    guesses = getBidPrices(bids, *args)
+    guesses = baseBid*getBidPrices(bids, *args)
     #print('Guesses:')
     #print(guesses)
     bidsPlaced = 0
+    
     numWins = 0
     clicks = 0
     spent = 0
+    goodBid = 0
     for i in range(len(actual)):
         bidAmt = guesses[i]
         payprice = actual[i]
         bid = bids[i]
-        #if (spent + bidAmt) <= 25000: #Would not place bid if the bid amount surpasses the budget
-        bidsPlaced += 1
-        
-        #if int(bid.click) == 1:
-        #    print('Bid Amount: ', bidAmt, ' | Pay Price: ', payprice, ' | Clicked? ', int(bid.click), '| pCTR: ', pCTR[i])
-        if bidAmt > payprice:
-            #print('Bid Amount: ', bidAmt, ' | Pay Price: ', payprice, ' | Clicked? ', int(bid.click))
-            numWins += 1
-            clicks += int(bid.click)
-            spent += int(bid.payprice)
-            
-    print('Win proportion: %f' % (numWins / bidsPlaced))
+        if (spent + bidAmt) <= 25000: #Would not place bid if the bid amount surpasses the budget
+            bidsPlaced += 1
+            if bidAmt > payprice:
+                numWins += 1
+                clicks += int(bid.click)
+                spent += int(bid.payprice)
+            if (int(bid.click)==1):
+                goodBid+=1
+    
+    print('Full Output: ')        
+    print('Accuracy: %f' % (clicks/226))
+    print('Good Bids: %d' % goodBid)
+    print('Bids Placed: %d' % bidsPlaced)
     print('Wins: %d' % numWins)
-    print('CTR: %f' % (clicks / numWins)) #Only need to consider the ads we paid for
+    if numWins != 0:
+        print('CTR: %f' % (clicks / numWins)) #Only need to consider the ads we paid for
     print('Conversions: %d' % (clicks))
     print('Spend: %d' % spent)
-    print('Average CPM: %f' % (spent / numWins)) # Average bid price / pay price?
-    print('Average CPC: %f' % (clicks / spent))
-    return(clicks/numWins)
+    return (clicks)
 
 #Is there a better way to find the optimal constant bid? Also, do I just bid until I run out of money / is the budget in the doc right?
 #One standard deviation above mean to find the random upper parameter?
