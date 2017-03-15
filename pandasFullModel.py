@@ -6,10 +6,11 @@ from sklearn.feature_extraction import DictVectorizer
 from sklearn.feature_selection import SelectKBest, chi2
 from sklearn_pandas import DataFrameMapper
 
-import matplotlib.pyplot as plt
-from sklearn.svm import SVC
-from sklearn.model_selection import StratifiedKFold
-from sklearn.feature_selection import RFECV
+
+#improve pCTR
+#write non-linear model
+#machine learning for c and langrangian multiplier
+
 
 trainFile = 'dataset/train.csv'
 validateFile = 'dataset/validation.csv'
@@ -35,6 +36,9 @@ def undersample(data, zeroMult=1):
     return pd.concat([nonclick_samples,click_samples], ignore_index=True)
 
 def getFeatures(data, fit=False):
+    # suggests that the bid price has the biggest influence on the optimal bid, all other categorical data
+    # don't necessarily have a clear influence (but is likely still useful)
+    # "the bid price is the key factor influencing the campaign's winning rate in its auctions"
     global dv, kbest
     metrics = ['click','payprice']
     # Stratify useragent into os and browser
@@ -71,9 +75,29 @@ def getPredictions(model, features, avgCTR):
     print(pCTR)
     return BASE_BID * pCTR / avgCTR
 
+
 def getPredictionsORTB1(model, features, avgCTR):
     pCTR = model.predict_proba(features)[:, 1]
     return np.sqrt(MODEL_CONST / 0.007 * pCTR + MODEL_CONST**2) - MODEL_CONST
+
+    # bidding appears to be a logarithmic function (postive and steep in the beginning, flattens out
+    # later on.  Thus, allocating more budget on the lower-cost bids is more beneficial than
+    # increasing budget on more expensive ones later on (see paper for images/clairification)
+
+    # bidding strategy for normal target
+    # ((c/L)T) + c^2 )^(1/2) - c
+    # where: L = langrangian multiplier; T = Theta (pCTR I think); c = constant
+    # suggested initial L = 5.2x10^-7
+
+    #bidding strategy for competitive targets:
+    # ((T + (c^2 L^2 + T^2)^(1/2))/ cL] ^ (1/3)) - (cL / (T + (c^2 L^2 + T^2 )^(1/2)) ^(1/3))
+    # where variables and suggested L are the same as above
+
+    # L = B/N where B is our overall budget, and N is the estimated number of bid requests over life of B
+
+    #suggests using machine learning to get all tuning parameters (L, c, T),
+    # where T is the pCTR for the current bid
+
 
 train_df, train_features = loadData(trainFile, train=True)
 avgCTR = train_df['click'].mean() # Average ctr of reduced (if performed) data set
