@@ -25,10 +25,14 @@ import numpy as np
 # print(os)
 # print(browser)
 
+tags = set()
 clicks = 0
-paid = 0
+for bid in Data('dataset/train.csv'):
+    if bid.click=='1': tags.add(bid.usertag)
+    clicks += int(bid.click)
+bidOn = 0
 for bid in Data('dataset/validation.csv'):
-    if bid.click=='1':
-        paid += int(bid.payprice)
-        clicks+=1
-print(paid / clicks)
+    if bid.usertag in tags:
+        bidOn += 1
+        clicks += int(bid.click)
+print(clicks / bidOn)

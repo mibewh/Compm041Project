@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn import linear_model
 from sklearn.preprocessing import Imputer, OneHotEncoder, FunctionTransformer
 from sklearn.feature_extraction import DictVectorizer
-from sklearn.feature_selection import SelectKBest, chi2
+from sklearn.feature_selection import SelectKBest, chi2, SelectFromModel
 from sklearn_pandas import DataFrameMapper
 
 
@@ -14,18 +14,25 @@ from sklearn_pandas import DataFrameMapper
 
 trainFile = 'dataset/train.csv'
 validateFile = 'dataset/validation.csv'
+testFile = 'dataset/test.csv'
+out_file = 'dataset/testing_bidding_price.csv'
 BALANCED = None #'balanced'
 K_FEATS = 100
 ZERO_MULT = 15
 C = 1
-BASE_BID = 5
-MODEL_CONST = 1e4
+BASE_BID = 50
+MODEL_CONST = 1e3
 
 dv = DictVectorizer()
 kbest = SelectKBest(chi2, k=K_FEATS)
-columns = ['click','bidprice','payprice','weekday','hour','region','city','useragent',\
-            'advertiser','slotformat','adexchange','slotvisibility',\
-            'slotwidth','slotheight','slotprice']
+
+lr = linear_model.LogisticRegression(C=0.3, penalty='l1', dual=False)
+selector = SelectFromModel(lr, prefit=True)
+
+columns = ['click','payprice','bidprice','bidid','weekday','hour','region','city','useragent',\
+            'slotformat','adexchange','slotvisibility',\
+            'slotwidth','slotheight','slotprice','creative','keypage']
+test_columns = columns[3:]
 def undersample(data, zeroMult=1):
     click_ind = data[data.click == 1].index
     nonclick_ind = data[data.click == 0].index
@@ -39,8 +46,9 @@ def getFeatures(data, fit=False):
     # suggests that the bid price has the biggest influence on the optimal bid, all other categorical data
     # don't necessarily have a clear influence (but is likely still useful)
     # "the bid price is the key factor influencing the campaign's winning rate in its auctions"
-    global dv, kbest
-    metrics = ['click','payprice']
+    global dv, kbest, lr
+    data = data.drop('bidid', axis=1) # Don't need bidid to find features
+    metrics = ['click','payprice','bidprice'] # Bid price must be considered a metric because it is not present in the test data, and therefore cannot be used as a feature in the model
     # Stratify useragent into os and browser
     agent_info = pd.DataFrame(np.array([[item for item in agent.split('_')] for agent in data.useragent]), columns=['os','browser'])
     data = data.drop('useragent',axis=1).join(agent_info)
@@ -53,18 +61,25 @@ def getFeatures(data, fit=False):
     #Reduce the feature space manually? As in get reduce to a bit for each browser, device type
     # Do one hot encoding for weekday?, hour?, region, city*,
     # Hour, weekday don't have to be categorical, does they?
-    kbest_mapper = DataFrameMapper([(vec_df.drop(metrics,axis=1).columns, kbest)])
-    if fit:
-        features = kbest_mapper.fit_transform(vec_df.drop(metrics,axis=1), data['click'])
-    else:
-        features = kbest_mapper.transform(vec_df.drop(metrics,axis=1))
-    features_df = pd.DataFrame(features, columns=vec_df.columns[kbest.get_support(indices=True)])
-    print(features_df.columns)
+
+    # feat_select_mapper = DataFrameMapper([(vec_df.drop(metrics,axis=1).columns, kbest)])
+    if fit: lr.fit(vec_df.drop(metrics,axis=1), data['click'])
+    selector = SelectFromModel(lr, prefit=True)
+    feat_select_mapper = DataFrameMapper([(vec_df.drop(metrics,axis=1).columns, selector)])
+    features = feat_select_mapper.transform(vec_df.drop(metrics,axis=1))
+    print(features.shape[1])
+    # if fit:
+    #     features = feat_select_mapper.fit_transform(vec_df.drop(metrics,axis=1), data['click'])
+    # else:
+    #     features = feat_select_mapper.transform(vec_df.drop(metrics,axis=1))
+    # features_df = pd.DataFrame(features, columns=vec_df.columns[kbest.get_support(indices=True)])
+    # print(features_df.columns)
     return features
 
-def loadData(fileName, train=False):
+def loadData(fileName, train=False, test=False):
     print('Loading data (%s)...' % fileName)
-    df = pd.read_csv(fileName, usecols=columns, dtype={'weekday':object,'hour':object,'region':object,'city':object,'advertiser':object})
+    if not test: df = pd.read_csv(fileName, usecols=columns, dtype={'weekday':object,'hour':object,'region':object,'city':object,'slotwidth':object,'slotheight':object})
+    else: df = pd.read_csv(fileName, usecols=test_columns, dtype={'weekday':object,'hour':object,'region':object,'city':object,'slotwidth':object,'slotheight':object})
     print('Preprocessing (%s)...' % fileName)
     if train: df = undersample(df, zeroMult=ZERO_MULT)
     features = getFeatures(df, fit=train)
@@ -76,9 +91,12 @@ def getPredictions(model, features, avgCTR):
     return BASE_BID * pCTR / avgCTR
 
 
-def getPredictionsORTB1(model, features, avgCTR):
+def getPredictionsORTB1(model, features):
     pCTR = model.predict_proba(features)[:, 1]
-    return np.sqrt(MODEL_CONST / 0.007 * pCTR + MODEL_CONST**2) - MODEL_CONST
+    # L = 25000 / 299749
+    L = 0.00675
+    return np.sqrt(MODEL_CONST / L * pCTR + MODEL_CONST**2) - MODEL_CONST
+    # return ((pCTR + (MODEL_CONST**2 * L**2 + pCTR**2)**(1/2)) / (MODEL_CONST * L))**(1/3) - ((MODEL_CONST * L) / (pCTR + (MODEL_CONST**2 * L**2 + pCTR**2)**(1/2)))**(1/3)
 
     # bidding appears to be a logarithmic function (postive and steep in the beginning, flattens out
     # later on.  Thus, allocating more budget on the lower-cost bids is more beneficial than
@@ -98,12 +116,21 @@ def getPredictionsORTB1(model, features, avgCTR):
     #suggests using machine learning to get all tuning parameters (L, c, T),
     # where T is the pCTR for the current bid
 
+def outputTestResults(model):
+    test_df, test_features = loadData(testFile, train=False, test=True)
+    guesses = getPredictionsORTB1(model, test_features)
+    # Prepare output dataframe and send it to csv file
+    out_df = pd.DataFrame({'bidid': test_df['bidid'], 'bidprice': guesses})
+    out_df.to_csv(out_file, index=False)
 
 train_df, train_features = loadData(trainFile, train=True)
 avgCTR = train_df['click'].mean() # Average ctr of reduced (if performed) data set
 print('Learning...')
-model = linear_model.LogisticRegression(n_jobs=-1, C=C, class_weight=BALANCED)
+# model = linear_model.LogisticRegression(n_jobs=-1, C=C, class_weight=BALANCED)
+model = linear_model.LogisticRegressionCV(n_jobs=-1, class_weight=BALANCED, cv=10, penalty='l2', dual=False, refit=True, multi_class='ovr', solver='liblinear')
 model.fit(train_features, train_df.click)
+
+# outputTestResults(model)
 
 #Display model accuracy metrics
 
@@ -111,7 +138,7 @@ model.fit(train_features, train_df.click)
 print('Evaluating...')
 val_df, val_features = loadData(validateFile, train=False)
 # guesses = getPredictions(model, val_features, avgCTR)
-guesses = getPredictionsORTB1(model, val_features, avgCTR)
+guesses = getPredictionsORTB1(model, val_features)
 print(guesses)
 bidsPlaced = 0
 numWins = 0
@@ -139,4 +166,4 @@ print('CTR: %f' % (clicks / numWins)) #Only need to consider the ads we paid for
 print('Conversions: %d' % (clicks))
 print('Spend: %d' % spent)
 print('Average CPM: %f' % (spent / numWins)) # Average bid price / pay price?
-print('Average CPC: %f' % (clicks / spent))
+print('Average CPC: %f' % (spent / clicks))
