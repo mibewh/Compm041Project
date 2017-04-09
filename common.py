@@ -52,7 +52,7 @@ def evaluate(validateFileName, getBidPrice, *args):
     print('Conversions: %d' % (clicks))
     print('Spend: %d' % spent)
     print('Average CPM: %f' % (spent / numWins)) # Average bid price / pay price?
-    print('Average CPC: %f' % (clicks / spent))
+    print('Average CPC: %f' % (spent / clicks))
 
 
 def evaluate_bulk(validateFileName, getBidPrices, *args):
@@ -91,7 +91,7 @@ def evaluate_bulk(validateFileName, getBidPrices, *args):
     print('Conversions: %d' % (clicks))
     print('Spend: %d' % spent)
     print('Average CPM: %f' % (spent / numWins)) # Average bid price / pay price?
-    print('Average CPC: %f' % (clicks / spent))
+    print('Average CPC: %f' % (spent / clicks))
     return(clicks/numWins)
 
 #Is there a better way to find the optimal constant bid? Also, do I just bid until I run out of money / is the budget in the doc right?
