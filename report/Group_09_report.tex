@@ -131,15 +131,26 @@ Figure 8 plots the solution's CPM as a function of the upper bound of our pseudo
 
 The calculated average CTR of this solution was again about $0.00033\%$, reflecting the inadequacy of this solution and its bad results, which are similar to those of the constant bid approach.
 
-\subsection{Linear Bidding Strategy}
+\subsection{Machine Learning Strategies}
+Before training the machine learning classifiers, there was a significant amount of work to be done in order to prepare the data for "learning". First, a high-level analysis (presented in detail in our individual reports) was useful in deciding on the good data features to be used for classification, i.e. the ones that do correlate with differences in the Click-Through Rate. Accordingly, several data fields that either had unique or highly differentiated values, such as the \textit{bidid} and the \textit{userid}, would not have been useful for classification and thus had to be removed. Therefore, some \textbf{data selection} was performed to remove those fields, as well as \textit{IP} (unique to each user), \textit{logtype} (1 in this dataset), \textit{domain}, \textit{url}, \textit{urlid}, \textit{creative}, \textit{keypage}, etc.
+
+Given the large volume of data with negative user feedback (click = 0) and the scarcity of impressions that led to conversions (click = 1), \textbf{undersampling} was also used to increase the ratio of clicked to non-clicked impressions in the training data. The small bias towards clicked impressions in training helped correct the bias in the original dataset, where only 0.077\% of all impressions were clicked.
+
+Several regression and classification machine learning algorithms were considered by our team. The problem lends itself well for supervised learning; the training dataset does contain auction results as well as user feedback. Our initial instinct was to use Linear Regression, a quite familiar and conceptually simple approach. Linear Regression uses the general linear function $y = a_0 +  \sum a_i x_i$, where the dependent variable $y$ is \textit{continuous}, as is \textit{usually} the case for the independent variables $x_i$ as well. It is tempting to use the linear model result as a probability, but there is a fundamental problem with that: the output of the linear model \textit{can be less than 0 or greater than 1}, rendering the output meaningless. 
+
+To solve this problem, \textit{Logistic Regression} was introduced, with a mathematical model that actually restricts the dependent variable value in the range $[0,1]$. In reality, the model is estimating \textit{the probability} of a categorical outcome, i.e. the likelihood of one discrete output result versus another. The general Logistic Regression formula for two outcomes (0 or 1) can be written as \[P(Y=1) = \frac{1}{1+e^-(a_0+\sum a_i x_i)}\]
+Though the independent variables may either be continuous or discrete, the result of the model is a probability of the dependent output taking the given discrete value.\footnote{https://www.quora.com/What-is-logistic-regression}
+
+Logistic Regression was the approach finally undertaken by our group. Logistic regression is a \textit{binary classification} algorithm, which means that the result of its predictions is discrete by nature. This caters perfectly to our problem, namely deciding whether a user will click (click = 1) an ad or not (no click = 0). Also, all impression data used for learning is categorical, which is acceptable since predictor variables in Logistic Regression dependent variables may be both continuous or categorical. The underlying mechanism of Logistic Regression is Maximum Likelihood Estimation (MLE), a widely used statistical model for estimating the values of parameter variables that maximize the likelihood that the output takes the observed value. 
+
+[talk about data selection and overfitting]
+
+
+\subsubsection{Linear Bidding Strategy}
 [TODO]
 
-\subsection{Non-linear Bidding Strategy}
-Before training the machine learning classifier, there was a significant amount of work to be done in order to prepare the data for "learning". First, a high-level analysis (presented in detail in our individual reports) was useful in deciding on the good data features to be used for classification, i.e. the ones that do correlate with differences in the Click-Through Rate. Accordingly, several data fields that either had unique or highly differentiated values, such as the \textit{bidid} and the \textit{userid}, would not have been useful for classification and thus had to be removed. Therefore, some \textbf{data selection} was performed to remove those fields, as well as \textit{IP} (unique to each user), \textit{logtype} (1 in this dataset), \textit{domain}, \textit{url}, \textit{urlid}, \textit{creative}, \textit{keypage}, etc.
+\subsubsection{Non-linear Bidding Strategy}
 
-[say something about null values]
-
-Finally, given the large volume of data with negative user feedback (click = 0) and the scarcity of impressions that led to conversions (click = 1), \textbf{undersampling} was used to increase the ratio of clicked to non-clicked impressions in the training data. The small bias towards clicked impressions in training helped correct the bias in the original dataset, where only 0.077\% of all impressions were clicked.
 
 [TODO]
 
