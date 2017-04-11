@@ -54,6 +54,8 @@ There were several non-trivial approaches our group experimented with, including
 
 Python was used for developing the main functionality of all the solutions and learning algorithms, as well as for common helper code used for loading the data, storing the output in a convenient format, and displaying a summary of the results in the terminal. The \textit{scikit-learn} \footnote{http://scikit-learn.org} Python library was used for the actual logistic regression functionality. Other Python libraries, such as \textit{pandas}\footnote{http://pandas.pydata.org/}, a data analysis software library, and \textit{numpy}\footnote{http://www.numpy.org/}, a scientific computing software package, were also utilized to facilitate data analysis and manipulation.
 
+\subsection{Basic Strategies}
+
 \begin{figure}
   \includegraphics[width=\linewidth]{Bids.png}
   \caption{Constant bid vs. Placed bids}
@@ -78,7 +80,7 @@ Python was used for developing the main functionality of all the solutions and l
   \label{fig:CPM}
 \end{figure}
 
-\subsection{Constant Bid}
+\subsubsection{Constant Bid}
 The first strategy was a rather simple one; the solution had to bid the same constant value in every auction. Given the budget constraint of $25,000$, the task can be treated as an optimization problem with the following limiting cases: the algorithm's bids are too high, which results to all auctions being won and the budget rapidly running out; or the algorithm's bids are too low, which results to too few auctions being won and the budget not being spent. 
 
 Clearly, the optimal solution lies somewhere in between the two limiting cases. This approach would in theory help us win more bids than choosing a constant bid by chance, and assuming that impressions that will be clicked are uniformly distributed in the dataset, it also increases the expected CTR, since the budget will all be spent, but not immediately and on consecutive bids. Therefore, we proceeded to calculating the \textit{mean} payprice in the training dataset and using that to define a range of values that we would explore. To approximate the optimal constant bidding amount, we plotted that range of probable values around the mean against several evaluation metrics, with the results presented above. 
@@ -91,7 +93,7 @@ Figure 4 shows the bid value against the Cost per million impressions, which exp
 
 The CTR is $0\%$ for runs where no impressions were clicked, and about $0.00033\%$ for the latter runs with one clicked impression. This CTR is significantly low, considering that the percentage of clicked impressions in the training dataset is more than 100 times greater, specifically about $0.077\%$.
 
-\subsection{Random Bid}
+\subsubsection{Random Bid}
 
 \begin{figure}
   \includegraphics[width=\linewidth]{random_bids.png}
@@ -129,10 +131,10 @@ Figure 8 plots the solution's CPM as a function of the upper bound of our pseudo
 
 The calculated average CTR of this solution was again about $0.00033\%$, reflecting the inadequacy of this solution and its bad results, which are similar to those of the constant bid approach.
 
-\subsection{Linear Bid}
+\subsection{Linear Bidding Strategy}
 [TODO]
 
-\subsection{Non-linear Bid}
+\subsection{Non-linear Bidding Strategy}
 Before training the machine learning classifier, there was a significant amount of work to be done in order to prepare the data for "learning". First, a high-level analysis (presented in detail in our individual reports) was useful in deciding on the good data features to be used for classification, i.e. the ones that do correlate with differences in the Click-Through Rate. Accordingly, several data fields that either had unique or highly differentiated values, such as the \textit{bidid} and the \textit{userid}, would not have been useful for classification and thus had to be removed. Therefore, some \textbf{data selection} was performed to remove those fields, as well as \textit{IP} (unique to each user), \textit{logtype} (1 in this dataset), \textit{domain}, \textit{url}, \textit{urlid}, \textit{creative}, \textit{keypage}, etc.
 
 [say something about null values]
