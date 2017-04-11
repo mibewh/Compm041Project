@@ -2,13 +2,17 @@ import numpy as np
 import sys
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn import linear_model
-from sklearn.preprocessing import Imputer, OneHotEncoder, FunctionTransformer, normalize
+from sklearn import linear_model, svm
+from sklearn.preprocessing import Imputer, OneHotEncoder, FunctionTransformer, normalize, PolynomialFeatures
 from sklearn.feature_extraction import DictVectorizer
-from sklearn.feature_selection import SelectKBest, chi2, SelectFromModel
+from sklearn.feature_selection import SelectKBest, chi2, SelectFromModel, f_classif, mutual_info_classif
 from sklearn_pandas import DataFrameMapper
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.naive_bayes import GaussianNB
+import sklearn.metrics as mets
+
+from polylearn import FactorizationMachineClassifier
 #improve pCTR
 #write non-linear model
 #machine learning for c and langrangian multiplier
@@ -19,18 +23,17 @@ validateFile = 'dataset/validation.csv'
 testFile = 'dataset/test.csv'
 out_file = 'dataset/testing_bidding_price.csv'
 BALANCED = None #'balanced'
-K_FEATS = 50
-ZERO_MULT = 100
+K_FEATS = 100
+ZERO_MULT = 10
 C = 1e6
 BASE_BID = 50
 
-MODEL_CONST = 1e6
-L = .0007
+MODEL_CONST = 45
+L = 6*10**(-4.5)
 
 dv = DictVectorizer()
 #For Kbest feature selection
-kbest = SelectKBest(chi2, k=K_FEATS)
-
+kbest = SelectKBest(f_classif, k=K_FEATS)
 
 lr = linear_model.LogisticRegression(C=2, penalty='l1', dual=False) # For select from model feature selection
 
@@ -73,42 +76,23 @@ def getFeatures(data, fit=False):
     if fit:
         vec = dv.fit_transform(data.drop(metrics, axis=1).to_dict(orient='records'))
         # lr.fit(vec, data['click'])
-        kbest.fit(vec, data['click'])
     else:
         vec = dv.transform(data.drop(metrics, axis=1).to_dict(orient='records'))
+
+    vec = normalize(vec, axis=1)
+    if fit:
+        kbest.fit(vec, data['click'])
+
     # selector = SelectFromModel(lr, prefit=True)
     # features = selector.transform(vec)
-    vec = normalize(vec, axis=0) #normalize(vec)
-    features = kbest.transform(vec)
-    if fit:
-        lr.fit(features, data['click'])
-    selector = SelectFromModel(lr, prefit=True)
-    # features = selector.transform(features)
 
+    # features = kbest.transform(vec)
+    features = vec
     # if fit:
-    #     vec_df = pd.DataFrame(dv.fit_transform(data.to_dict(orient='records')).toarray())
-    # else:
-    #     vec_df = pd.DataFrame(dv.transform(data.to_dict(orient='records')).toarray())
-    # vec_df.columns = dv.get_feature_names()
-    # vec_df.index = data.index
-    # #Reduce the feature space manually? As in get reduce to a bit for each browser, device type
-    # # Do one hot encoding for weekday?, hour?, region, city*,
-    # # Hour, weekday don't have to be categorical, does they?
-    #
-    # # feat_select_mapper = DataFrameMapper([(vec_df.drop(metrics,axis=1).columns, kbest)])
-    # if fit: lr.fit(vec_df.drop(metrics,axis=1), data['click'])
+    #     lr.fit(features, data['click'])
     # selector = SelectFromModel(lr, prefit=True)
-    # feat_select_mapper = DataFrameMapper([(vec_df.drop(metrics,axis=1).columns, selector)])
-    # features = feat_select_mapper.transform(vec_df.drop(metrics,axis=1))
-    # print(features.shape[1])
 
-    # if fit:
-    #     features = feat_select_mapper.fit_transform(vec_df.drop(metrics,axis=1), data['click'])
-    # else:
-    #     features = feat_select_mapper.transform(vec_df.drop(metrics,axis=1))
-    # features_df = pd.DataFrame(features, columns=vec_df.columns[kbest.get_support(indices=True)])
-    # print(features_df.columns)
-    return features.toarray()
+    return features
 
 def appendPriceCategories(features, cats):
     cats = cats.reshape(-1,1)
@@ -139,46 +123,15 @@ def loadData(fileName, train=False, test=False):
     features = getFeatures(df, fit=train)
     return df, features
 
-# def getPredictions(model, features, avgCTR):
-#     pCTR = model.predict_proba(features)[:, 1]
-#     print(pCTR)
-#     return BASE_BID * pCTR / avgCTR
-
-
-# def getPredictionsORTB1(model, features):
-#     pCTR = model.predict_proba(features)[:, 1]
-#     pCats = stratifier.predict(features)
-#     multipliers = {0: 1, 1: 1, 2: 1}
-#     mults = np.vectorize(lambda x: multipliers[x])(pCats)
-#     # L = 25000 / 299749
-#     # L = 0.006
-#     return (np.sqrt(MODEL_CONST / L * pCTR + MODEL_CONST**2) - MODEL_CONST) * mults
 
 def getpredictionORTB1(pCTR, pCat, budgetRemaining, avgCTR):
     multipliers = {0: 1, 1: 1.5, 2: 1}
     mult = multipliers[pCat]
     # return 50 * pCTR / avgCTR
-    return (np.sqrt(MODEL_CONST / L * pCTR + MODEL_CONST**2) - MODEL_CONST) #* mult
+    if pCTR < .47: return 0
+    # return (np.sqrt(MODEL_CONST / L * pCTR + MODEL_CONST**2) - MODEL_CONST) * mult
+    return pCTR**2 * 300 #(pCTR * (25000/budgetRemaining))**2 * (400 * budgetRemaining/25000)
 
-    # return ((pCTR + (MODEL_CONST**2 * L**2 + pCTR**2)**(1/2)) / (MODEL_CONST * L))**(1/3) - ((MODEL_CONST * L) / (pCTR + (MODEL_CONST**2 * L**2 + pCTR**2)**(1/2)))**(1/3)
-
-    # bidding appears to be a logarithmic function (postive and steep in the beginning, flattens out
-    # later on.  Thus, allocating more budget on the lower-cost bids is more beneficial than
-    # increasing budget on more expensive ones later on (see paper for images/clairification)
-
-    # bidding strategy for normal target
-    # ((c/L)T) + c^2 )^(1/2) - c
-    # where: L = langrangian multiplier; T = Theta (pCTR I think); c = constant
-    # suggested initial L = 5.2x10^-7
-
-    #bidding strategy for competitive targets:
-    # ((T + (c^2 L^2 + T^2)^(1/2))/ cL] ^ (1/3)) - (cL / (T + (c^2 L^2 + T^2 )^(1/2)) ^(1/3))
-    # where variables and suggested L are the same as above
-
-    # L = B/N where B is our overall budget, and N is the estimated number of bid requests over life of B
-
-    #suggests using machine learning to get all tuning parameters (L, c, T),
-    # where T is the pCTR for the current bid
 
 def outputTestResults(model):
     test_df, test_features = loadData(testFile, train=False, test=True)
@@ -193,9 +146,11 @@ train_df, train_features = loadData(trainFile, train=True)
 cats_train = getCats(train_df)
 avgCTR = train_df['click'].mean() # Average ctr of reduced (if performed) data set
 print('Learning...')
-model = linear_model.LogisticRegression(n_jobs=-1, C=C, class_weight=BALANCED)
-# model = linear_model.LogisticRegressionCV(n_jobs=-1, class_weight=BALANCED, Cs=, cv=10, penalty='l2', dual=False, refit=True, multi_class='ovr', solver='liblinear')
-model.fit(appendPriceCategories(train_features, cats_train), train_df.click)
+# model = linear_model.LogisticRegression(n_jobs=-1, C=C, class_weight=BALANCED)
+# model = FactorizationMachineClassifier(loss='logistic', n_components=1, fit_linear=False)
+model = RandomForestClassifier(n_estimators=100, criterion='entropy', max_features=200, class_weight={0:1,1:1000})
+# model = DecisionTreeClassifier(criterion='entropy', max_features=100, class_weight={0:1,1:100})
+model.fit(train_features, train_df.click)
 learnPriceStrata(train_df, train_features)
 
 # outputTestResults(model)
@@ -205,19 +160,27 @@ print('Evaluating...')
 val_df, val_features = loadData(validateFile, train=False)
 
 pCats = stratifier.predict(val_features)
-# pCTR = model.predict_proba(train_features)[:, 1]
-# pCTR_click = pCTR[train_df['click'] == 1]
-# pCTR_nonclick = pCTR[train_df['click'] == 0]
-pCTR = model.predict_proba(appendPriceCategories(val_features, pCats))[:, 1]
-# plt.hist(pCTR)
-# plt.axis([0,.02,0,300000])
-# plt.show()
+# pCTR = model.predict_proba(val_features)
+pCTR = model.predict_proba(val_features)[:, 1]
 pCTR_click = pCTR[val_df['click'] == 1]
 pCTR_nonclick = pCTR[val_df['click'] == 0]
 print('Average Click pCTR: %f' % np.average(pCTR_click))
 print('Median Click pCTR: %f' %np.median(pCTR_click))
 print('Average Nonclick pCTR: %f' %np.average(pCTR_nonclick))
 print('Median Nonclick pCTR: %f' % np.median(pCTR_nonclick))
+print('ROC AUC Score: %f' % mets.roc_auc_score(val_df['click'], pCTR, None))
+curve = mets.precision_recall_curve(val_df['click'], pCTR, 1)
+print('AUC Score: %f' % mets.auc(curve[1], curve[0], reorder=True))
+predicts = np.array([0 if p <= 0.3 else 1 for p in pCTR])
+print(mets.confusion_matrix(val_df['click'], predicts)) #model.predict(val_features)
+
+# plt.plot(curve[1], curve[0])
+# plt.show()
+
+plt.hist(pCTR_click, 50)
+plt.show()
+plt.hist(pCTR_nonclick, 50)
+plt.show()
 # sys.exit()
 
 bidsPlaced = 0
