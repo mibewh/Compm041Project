@@ -9,7 +9,7 @@ from sklearn_pandas import DataFrameMapper
 trainFile = 'dataset/train.csv'
 validateFile = 'dataset/validation.csv'
 BALANCED = 'balanced'
-K_FEATS = 20
+K_FEATS = 120
 ZERO_MULT = 1
 C = 1
 BASE_BID = 5
@@ -68,35 +68,49 @@ model.fit(train_features, train_df.click)
 
 #Display model accuracy metrics
 
-#Evalute Model on validation set
-print('Evaluating...')
-val_df, val_features = loadData(validateFile, train=False)
-guesses = getPredictions(model, val_features, avgCTR)
-print(guesses)
-bidsPlaced = 0
-numWins = 0
-clicks = 0
-spent = 0
-clicksMissed = 0
-for i in range(len(guesses)):
-    bidAmt = guesses[i]
-    bid = val_df.iloc[i]
-    if (spent + bidAmt) <= 25000: #Would not place bid if the bid amount surpasses the budget
-        bidsPlaced += 1
-        if bidAmt > bid.payprice:
-            numWins += 1
-            clicks += bid.click
-            spent += bid.payprice
-            if bid.click==1: print(bid)
-        else:
-            if bid.click == 1:
-                clicksMissed += 1
+base_bids = [4, 5, 6, 7, 8, 9]
 
-print('Bids Placed: %d' % bidsPlaced)
-print('Wins: %d' % numWins)
-print('Clicks Missed: %d' % clicksMissed)
-print('CTR: %f' % (clicks / numWins)) #Only need to consider the ads we paid for
-print('Conversions: %d' % (clicks))
-print('Spend: %d' % spent)
-print('Average CPM: %f' % (spent / numWins)) # Average bid price / pay price?
-print('Average CPC: %f' % (clicks / spent))
+val_df, val_features = loadData(validateFile, train=False)
+
+for k in range(5):
+    BASE_BID = base_bids[k]
+    print(30 * '-')
+    print('Trial %d\n' % k)
+    #Evalute Model on validation set
+    #print('Evaluating...')
+    guesses = getPredictions(model, val_features, avgCTR)
+    #print(guesses)
+    bidsPlaced = 0
+    numWins = 0
+    clicks = 0
+    spent = 0
+    clicksMissed = 0
+    for i in range(len(guesses)):
+        bidAmt = guesses[i]
+        bid = val_df.iloc[i]
+        if (spent + bidAmt) <= 25000: #Would not place bid if the bid amount surpasses the budget
+            bidsPlaced += 1
+            if bidAmt > bid.payprice:
+                numWins += 1
+                clicks += bid.click
+                spent += bid.payprice
+                #if bid.click==1: print(bid)
+            else:
+                if bid.click == 1:
+                    clicksMissed += 1
+
+    print('Base bid = %d ' % BASE_BID)
+    print('Bids Placed: %d' % bidsPlaced)
+    print('Wins: %d' % numWins)
+    print('Clicks Missed: %d' % clicksMissed)
+    if numWins:
+        print('CTR: %f' % (clicks / numWins)) #Only need to consider the ads we paid for
+    print('Conversions: %d' % (clicks))
+    print('Spend: %d' % spent)
+    if numWins:
+        print('Average CPM: %f' % (spent / numWins)) # Average bid price / pay price?
+    if clicks:
+        print('Average CPC: %f' % (spent / clicks))
+    print()
+    print(30 * '-')
+    print()
