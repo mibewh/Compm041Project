@@ -34,7 +34,7 @@ The challenge in automating ad auctions and bidding in real-time is the necessit
 
 Given real-life ad impression data, a machine learning approach is often preferred in tackling this problem. First, a large data set with \textit{training} data is used to build and optimize some type of machine learning classifier. After the machine learning model is trained, it is used to make predictions about data in a \textit{test} data set, for which user feedback is not provided, thus attempting to predict unknown users' behavior. The success of the classifier is evaluated by different metrics that reflect its accuracy in anticipating an unknown user's responsiveness to an ad. The machine learning approach undertaken in my personal strategy is \textit{logistic regression}.
 
-Therefore, in attempting to predict user behavior, a thorough and educated study and use of the training data is required for accurate and useful results. Our individual reports present some data analytics that result from a basic exploration of the training data set provided for the assignment. 
+Therefore, in attempting to predict user behavior, a thorough and educated study and use of the training data is required for accurate and useful results. Our individual reports present some data analytics that result from a basic exploration of the training data set provided for the assignment.
 
 In this paper, different approaches to automating the generation of bid prices will be undertaken, and each will be evaluated using common evaluation metrics and comparatively to others. First, two naive strategies with little optimisation will be implemented, and the results will be presented and discussed. Subsequently, two machine learning approaches will be presented, one using a linear model and one using a non-linear one. Our approach and steps in building our machine learning classifier and developing a bidding strategy will be detailed. The techniques employed throughout our group strategies will be discussed, and different design decisions made will be defended. Finally, the results of our best strategy will be presented and commented on using relevant evaluation metrics.
 
@@ -81,9 +81,9 @@ Python was used for developing the main functionality of all the solutions and l
 \end{figure}
 
 \subsubsection{Constant Bid}
-The first strategy was a rather simple one; the solution had to bid the same constant value in every auction. Given the budget constraint of $25,000$, the task can be treated as an optimization problem with the following limiting cases: the algorithm's bids are too high, which results to all auctions being won and the budget rapidly running out; or the algorithm's bids are too low, which results to too few auctions being won and the budget not being spent. 
+The first strategy was a rather simple one; the solution had to bid the same constant value in every auction. Given the budget constraint of $25,000$, the task can be treated as an optimization problem with the following limiting cases: the algorithm's bids are too high, which results to all auctions being won and the budget rapidly running out; or the algorithm's bids are too low, which results to too few auctions being won and the budget not being spent.
 
-Clearly, the optimal solution lies somewhere in between the two limiting cases. This approach would in theory help us win more bids than choosing a constant bid by chance, and assuming that impressions that will be clicked are uniformly distributed in the dataset, it also increases the expected CTR, since the budget will all be spent, but not immediately and on consecutive bids. Therefore, we proceeded to calculating the \textit{mean} payprice in the training dataset and using that to define a range of values that we would explore. To approximate the optimal constant bidding amount, we plotted that range of probable values around the mean against several evaluation metrics, with the results presented above. 
+Clearly, the optimal solution lies somewhere in between the two limiting cases. This approach would in theory help us win more bids than choosing a constant bid by chance, and assuming that impressions that will be clicked are uniformly distributed in the dataset, it also increases the expected CTR, since the budget will all be spent, but not immediately and on consecutive bids. Therefore, we proceeded to calculating the \textit{mean} payprice in the training dataset and using that to define a range of values that we would explore. To approximate the optimal constant bidding amount, we plotted that range of probable values around the mean against several evaluation metrics, with the results presented above.
 
 Figures 1 and 2 show the constant bid value plotted against the bids placed and the bids won by the solution respectively. The results are perfectly consistent with the notion that a high constant bid value places less bids and wins less auctions that a lower one. Additionally, the fact that significant differences in bids and wins are observed for slight variations of the constant bid suggests that the payprice values in the dataset are concentrated around the mean value (which is around 80).
 
@@ -132,22 +132,22 @@ Figure 8 plots the solution's CPM as a function of the upper bound of our pseudo
 The calculated average CTR of this solution was again about $0.00033\%$, reflecting the inadequacy of this solution and its bad results, which are similar to those of the constant bid approach.
 
 \subsection{Machine Learning Strategies}
-Several regression and classification machine learning algorithms were considered by our team. The problem lends itself well for supervised learning; the training dataset does contain auction results as well as user feedback, and the goal is to build a classifier that produce a CTR estimate for any given impression. Our initial instinct was to use Linear Regression, a quite familiar and conceptually simple approach. Linear Regression uses the general linear function $y = a_0 +  \sum a_i x_i$, where the dependent variable $y$ is \textit{continuous}, as is \textit{usually} the case for the independent variables $x_i$ as well. It is tempting to use the linear model result as a probability, but there is a fundamental problem with that: the output of the linear model \textit{can be less than 0 or greater than 1}, rendering the output meaningless. 
+Several regression and classification machine learning algorithms were considered by our team. The problem lends itself well for supervised learning; the training dataset does contain auction results as well as user feedback, and the goal is to build a classifier that produce a CTR estimate for any given impression. Our initial instinct was to use Linear Regression, a quite familiar and conceptually simple approach. Linear Regression uses the general linear function $y = a_0 +  \sum a_i x_i$, where the dependent variable $y$ is \textit{continuous}, as is \textit{usually} the case for the independent variables $x_i$ as well. It is tempting to use the linear model result as a probability, but there is a fundamental problem with that: the output of the linear model \textit{can be less than 0 or greater than 1}, rendering the output meaningless.
 
 To solve this problem, \textit{Logistic Regression} was introduced, with a mathematical model that actually restricts the dependent variable value in the range $[0,1]$. In reality, the model is estimating \textit{the probability} of a categorical outcome, i.e. the likelihood of one discrete output result versus another. The general Logistic Regression formula for two outcomes (0 or 1) can be written as \[P(Y=1) = \frac{1}{1+e^-(a_0+\sum a_i x_i)}\]
 Though the independent variables may either be continuous or discrete, the result of the model is a probability of the dependent output taking the given discrete value.\footnote{https://www.quora.com/What-is-logistic-regression}
 
-Logistic Regression was the approach finally undertaken by our group. Logistic regression is a \textit{binary classification} algorithm, which means that the result of its predictions is discrete by nature. This caters perfectly to our problem, namely deciding whether a user will click (click = 1) an ad or not (no click = 0). Also, all impression data used for learning is categorical, which is acceptable since dependent variables in Logistic Regression may be both continuous or categorical. The underlying mechanism of Logistic Regression is Maximum Likelihood Estimation (MLE), a widely used statistical model for estimating the values of parameter variables that maximize the likelihood that the output takes an observed value. 
+However, the Logistic regression is not the approach that we ended up using. We chose to use a \textit{Random Forest Classifier} as our learning method.\footnote{https://en.wikipedia.org/wiki/Random\_forest} This basically uses a group of decision trees to make its decision, and we found that given the rather unpredictive nature of the data, and the number of categorical features, that this was a model best suited to our pCTR prediction problem.
 
 Before training the machine learning classifiers to make CTR predictions, there was a significant amount of work to be done in order to prepare the data for "learning". First, a high-level analysis (presented in detail in our individual reports) was useful in deciding on the good data features to be used for classification, i.e. the ones that do correlate with differences in the Click-Through Rate. Accordingly, several data fields that either had unique or highly differentiated values, such as the \textit{bidid} and the \textit{userid}, would not have been useful for classification and thus had to be removed. Therefore, some \textbf{data selection} was performed to remove those fields, as well as \textit{IP} (unique to each user), \textit{logtype} (1 in this dataset), \textit{domain}, \textit{url}, \textit{urlid}, \textit{creative}, \textit{keypage}, etc.
 
-Given the large volume of data with negative user feedback (click = 0) and the scarcity of impressions that led to conversions (click = 1), \textbf{undersampling} was also used to increase the ratio of clicked to non-clicked impressions in the training data. The small bias towards clicked impressions in training helped correct the bias in the original dataset, where only 0.077\% of all impressions were clicked.
+Given the large volume of data with negative user feedback (click = 0) and the scarcity of impressions that led to conversions (click = 1), \textbf{undersampling} was also used to increase the ratio of clicked to non-clicked impressions in the training data. The small bias towards clicked impressions in training helped correct the bias in the original dataset, where only 0.077\% of all impressions were clicked. The method of undersampling that we implemented allows us to set a ratio of number of number of nonclicks to number of clicks in our training dataset.
 
-Subsequently, the data was tranformed using a technique known as \textit{one-hot encoding}. One-hot encoding creates a vector for every possible string value any feature can possibly take, transforming the feature-value mappings chosen for learning into sparse matrices, One-hot encoding tranforms complex feature-value mappings into simple (though very large) matrices with only binary digits, a conversion which is very helpful for mathematical computations as well as more convenient for machine learning classification algorithms.
+Subsequently, the data was transformed using a technique known as \textit{one-hot encoding}. One-hot encoding creates a vector for every possible string value any feature can possibly take, transforming the feature-value mappings chosen for learning into sparse matrices, One-hot encoding transforms complex feature-value mappings into simple (though very large) matrices with only binary digits, a conversion which is very helpful for mathematical computations as well as more convenient for machine learning classification algorithms.
 
-Since one-hot encoding vastly expands the feature space, we performed \textit{feature selection} to prevent long running times of our classification algorithms and avoid problems with Logistic Regression such as \textit{overfitting}. Essentially, a subset of the large feature space was chosen, which contained the \textit{best} predictor variables in terms of degree of correlation with the output pCTR. After experimenting with the number of features we'd allow, we observed the results of the solution after using 20, 40, and 60 features (in the linear bidding strategy) were extremely similar. For values above 100 features, the solution started producing inferior results. We concluded that there must be around twenty very good features for training, so we limited the selected features to 20.
+Next, we take some fields that are in the data and modify them such that they will be more useful features. We take weekday and hour, and replace these with binary features which indicate whether or not the impression occurs during a peak time. We split useragent into two fields, for both operating system and browser used. Using the operating system information, we determine whether or not a mobile device is being used and add that as a feature.
 
-After this last step, the classifier is ready to be trained. The selected feature vectors are passed into the \textit{scikit-learn} library, and a logistic regression model is built to produce CTR predictions. It's worth noting that the option 'class weight' is set to \textit{balanced}, which means that the learning weights associated with feature classes are automatically adjusted to be inveresly proportional to class frequencies in the training data.
+After this last step, the classifier is ready to be trained. The selected feature vectors are passed into the \textit{scikit-learn} library, and a logistic regression model is built to produce CTR predictions. It's worth noting that the option 'class weight' is set to such that clicks are weighted more highly in the classification process than nonclicks, to an amount that we tune depending on the strategy we are implementing.
 
 After learning is completed, the validation dataset is loaded and some data manipulation is performed, as described above. Subsequently, the model is used to calculate CTR predictions for every impression in the validation dataset and store them in an in-memory array. The real-time bidding simulation can then be performed, and its results evaluated.
 
@@ -203,34 +203,61 @@ For the determined optimal base bid value of $5$, we were quite satisfied with t
 
 \subsubsection{Non-linear Bidding Strategy}
 
-[TODO]
+The process that we used in our non-linear strategy for learning pCTRs can be found in our machine learning strategies section. The strategy equation that we used was the ORTB1 strategy\cite{ORTB}, which uses the following equation:
+\begin{equation}\sqrt{\frac{c\theta}{\lambda}+c^2}-c\end{equation}
+$\lambda$ is the langrangian multiplier, $c$ is a constant, and $\theta$ is
+the input pCTR value. Through trial and error, the best settings for the
+tunable values that I determined for my configuration were $\lambda=5*10^{-6}$ and
+$c=200$. We use 30 times as many nonclicks as clicks in our undersampling process,
+and weight clicks 20 times as much in our learning process.
+
+The results that are showed in the included table.
+\begin{table}
+\centering
+\caption{Non-linear Strategy Results}
+\begin{tabular}{|c|l|} \hline
+\textbf{Statistic}&\textbf{Value}\\ \hline
+Click-Through Rate&0.001140\\ \hline
+Conversions&189\\ \hline
+Spend&13647\\ \hline
+Average CPM&82.292757\\ \hline
+Average CPC&72.210370\\
+\hline\end{tabular}
+\end{table}
+The strategy that we used could have achieved more clicks if desired, but we chose to optimise for click through rate. We only
+use about half of our budget, and managed to keep average CPM and CPC fairly low in the process.
 
 \section{Conclusion}
 
 [TODO]
 
 \begin{thebibliography}{4}
-\bibitem{RTB} 
+\bibitem{RTB}
 Xuehua Shen, Jun Wang, Shuai Yuan, and Weinan Zhang.
 Real-time bidding benchmarking with ipinyou
-dataset. 
+dataset.
 \textit{arXiv preprint arXiv:1407.7073, 2014.}
 
 \bibitem{second}
 Gouthami Kondakindi, Vinit Parakh, Sai Kaushik Ponnekanti, Aswin Rajkumar, and Satakshi Rana.
 A Logistic Regression Approach to Ad Click
-Prediction. 
-\textit{Mach Learn Class Project, 2014}. 
+Prediction.
+\textit{Mach Learn Class Project, 2014}.
 
 \bibitem{third}
 Cheng Li, Yue Lu, Qiaozhu Mei, Dong Wang, and Sandeep Pandey.
-Click-through Prediction for Advertising in Twitter Timeline. 
-\textit{University of Michigan, KDD 2015 Sydney}. 
+Click-through Prediction for Advertising in Twitter Timeline.
+\textit{University of Michigan, KDD 2015 Sydney}.
 
 \bibitem{fourth}
 H. Brendan McMahan, Gary Holt, D. Sculley, Michael Young, Dietmar Ebner, Julian Grady, Lan Nie, Todd Phillips, Eugene Davydov, Daniel Golovin, Sharat Chikkerur, Dan Liu, Martin Wattenberg, Arnar Mar Hrafnkelsson, Tom Boulos, and Jeremy Kubica.
 Ad Click Prediction: a View from the Trenches.
-\textit{Google, Inc. KDD 2013 Chicago}. 
+\textit{Google, Inc. KDD 2013 Chicago}.
+
+\bibitem{ORTB}
+W. Zhang, S. Yuan, and J. Wang.
+Optimal real-timebidding for display advertising.
+Real-time bidding benchmarking with ipinyou, 2014.
 
 \end{thebibliography}
 
