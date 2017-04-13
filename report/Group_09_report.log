@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.4.5)  12 APR 2017 17:42
+=======
 This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.12.4)  11 APR 2017 16:15
+>>>>>>> 0425af7cc6fd258f06d5645dbe3f909353a4c216
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -233,6 +237,24 @@ LaTeX Warning: Label `fig:clicks' multiply defined.
 
 LaTeX Warning: Label `fig:CPM' multiply defined.
 
+
+LaTeX Warning: Label `fig:bids' multiply defined.
+
+
+LaTeX Warning: Label `fig:bids' multiply defined.
+
+
+LaTeX Warning: Label `fig:bids' multiply defined.
+
+
+LaTeX Warning: Label `fig:bids' multiply defined.
+
+
+LaTeX Warning: Label `fig:bids' multiply defined.
+
+
+LaTeX Warning: Label `fig:bids' multiply defined.
+
 )
 \openout1 = `Group_09_report.aux'.
 
@@ -399,24 +421,112 @@ Package pdftex.def Info: random_CPM.png used on input line 117.
 (pdftex.def)             Requested size: 240.0pt x 142.67065pt.
  [3 <./random_bids.png> <./random_wins.png> <./random_clicks.png> <./random_CPM
 .png>]
-Underfull \vbox (badness 1558) has occurred while \output is active []
+Underfull \vbox (badness 1565) has occurred while \output is active []
+
+
+Underfull \vbox (badness 1668) has occurred while \output is active []
 
  [4]
-[5
+Overfull \hbox (3.17345pt too wide) in paragraph at lines 152--153
+[]\T1/aer/m/n/9 After learn-ing is com-pleted, the val-i-da-tion dataset is loa
+ded
+ []
 
-] (./Group_09_report.aux)
+
+Overfull \hbox (4.51428pt too wide) in paragraph at lines 152--153
+\T1/aer/m/n/9 and some data ma-nip-u-la-tion is per-formed, as de-scribed above
+.
+ []
+
+<linear_bids.png, id=44, 1193.45876pt x 710.655pt>
+File: linear_bids.png Graphic file (type png)
+ <use linear_bids.png>
+Package pdftex.def Info: linear_bids.png used on input line 155.
+(pdftex.def)             Requested size: 240.0pt x 142.90923pt.
+
+<linear_wins.png, id=45, 1190.4475pt x 709.65125pt>
+File: linear_wins.png Graphic file (type png)
+ <use linear_wins.png>
+Package pdftex.def Info: linear_wins.png used on input line 161.
+(pdftex.def)             Requested size: 240.0pt x 143.06471pt.
+
+<linear_clicks.png, id=46, 1191.45125pt x 711.65875pt>
+File: linear_clicks.png Graphic file (type png)
+ <use linear_clicks.png>
+Package pdftex.def Info: linear_clicks.png used on input line 167.
+(pdftex.def)             Requested size: 240.0pt x 143.34998pt.
+
+<linear_CTR.png, id=47, 1188.44pt x 708.6475pt>
+File: linear_CTR.png Graphic file (type png)
+ <use linear_CTR.png>
+Package pdftex.def Info: linear_CTR.png used on input line 173.
+(pdftex.def)             Requested size: 240.0pt x 143.10025pt.
+
+<linear_CPM.png, id=48, 1188.44pt x 713.66624pt>
+File: linear_CPM.png Graphic file (type png)
+ <use linear_CPM.png>
+Package pdftex.def Info: linear_CPM.png used on input line 179.
+(pdftex.def)             Requested size: 240.0pt x 144.1137pt.
+
+<linear_CPC.png, id=49, 1187.43625pt x 710.655pt>
+File: linear_CPC.png Graphic file (type png)
+ <use linear_CPC.png>
+Package pdftex.def Info: linear_CPC.png used on input line 185.
+(pdftex.def)             Requested size: 240.0pt x 143.63576pt.
+
+Overfull \hbox (10.6456pt too wide) in paragraph at lines 192--193
+\T1/aer/m/n/9 sion with av-er-age CTR, i.e. for which the ra-tio $\OML/cmm/m/it
+/9 pCTR=avgCTR$
+ []
+
+[5 <./linear_bids.png> <./linear_wins.png> <./linear_clicks.png> <./linear_CTR.
+png> <./linear_CPM.png>]
+Overfull \hbox (5.35112pt too wide) in paragraph at lines 198--199
+\T1/aer/m/n/9 click-through rate per-cent-ages re-spec-tively, for the same ran
+ge
+ []
+
+
+Underfull \vbox (badness 1616) has occurred while \output is active []
+
+ [6 <./linear_CPC.png>] (./Group_09_report.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
+<<<<<<< HEAD
+ 3202 strings out of 494447
+ 41885 string characters out of 6166767
+ 112024 words of memory out of 5000000
+ 6437 multiletter control sequences out of 15000+600000
+=======
  3172 strings out of 493029
  40408 string characters out of 6136234
  115716 words of memory out of 5000000
  6615 multiletter control sequences out of 15000+600000
+>>>>>>> 0425af7cc6fd258f06d5645dbe3f909353a4c216
  50604 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  41i,10n,35p,1129b,274s stack positions out of 5000i,500n,10000p,200000b,80000s
+<<<<<<< HEAD
+{/usr/local/texlive/2016basic/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/lo
+cal/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr
+/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.p
+fb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi
+6.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mmi9.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmr6.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr9.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmsy6.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmsy9.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmti9.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/urw/
+helvetic/uhvb8a.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/urw/he
+lvetic/uhvr8a.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/urw/time
+s/utmb8a.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/urw/times/utm
+ri8a.pfb>
+Output written on Group_09_report.pdf (6 pages, 406662 bytes).
+=======
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/share/texlive/texmf-d
@@ -430,9 +540,10 @@ r/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texl
 ive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/
 fonts/type1/urw/times/utmri8a.pfb>
 Output written on Group_09_report.pdf (5 pages, 306275 bytes).
+>>>>>>> 0425af7cc6fd258f06d5645dbe3f909353a4c216
 PDF statistics:
- 86 PDF objects out of 1000 (max. 8388607)
- 50 compressed objects within 1 object stream
+ 105 PDF objects out of 1000 (max. 8388607)
+ 55 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 41 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 71 words of extra memory for PDF output out of 10000 (max. 10000000)
 

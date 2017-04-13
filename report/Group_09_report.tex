@@ -132,25 +132,76 @@ Figure 8 plots the solution's CPM as a function of the upper bound of our pseudo
 The calculated average CTR of this solution was again about $0.00033\%$, reflecting the inadequacy of this solution and its bad results, which are similar to those of the constant bid approach.
 
 \subsection{Machine Learning Strategies}
-Before training the machine learning classifiers to make CTR predictions, there was a significant amount of work to be done in order to prepare the data for "learning". First, a high-level analysis (presented in detail in our individual reports) was useful in deciding on the good data features to be used for classification, i.e. the ones that do correlate with differences in the Click-Through Rate. Accordingly, several data fields that either had unique or highly differentiated values, such as the \textit{bidid} and the \textit{userid}, would not have been useful for classification and thus had to be removed. Therefore, some \textbf{data selection} was performed to remove those fields, as well as \textit{IP} (unique to each user), \textit{logtype} (1 in this dataset), \textit{domain}, \textit{url}, \textit{urlid}, \textit{creative}, \textit{keypage}, etc.
-
-Given the large volume of data with negative user feedback (click = 0) and the scarcity of impressions that led to conversions (click = 1), \textbf{undersampling} was also used to increase the ratio of clicked to non-clicked impressions in the training data. The small bias towards clicked impressions in training helped correct the bias in the original dataset, where only 0.077\% of all impressions were clicked.
-
-Several regression and classification machine learning algorithms were considered by our team. The problem lends itself well for supervised learning; the training dataset does contain auction results as well as user feedback, and the goal is to build a classifier that estimates the CTR of any given impression. Our initial instinct was to use Linear Regression, a quite familiar and conceptually simple approach. Linear Regression uses the general linear function $y = a_0 +  \sum a_i x_i$, where the dependent variable $y$ is \textit{continuous}, as is \textit{usually} the case for the independent variables $x_i$ as well. It is tempting to use the linear model result as a probability, but there is a fundamental problem with that: the output of the linear model \textit{can be less than 0 or greater than 1}, rendering the output meaningless. 
+Several regression and classification machine learning algorithms were considered by our team. The problem lends itself well for supervised learning; the training dataset does contain auction results as well as user feedback, and the goal is to build a classifier that produce a CTR estimate for any given impression. Our initial instinct was to use Linear Regression, a quite familiar and conceptually simple approach. Linear Regression uses the general linear function $y = a_0 +  \sum a_i x_i$, where the dependent variable $y$ is \textit{continuous}, as is \textit{usually} the case for the independent variables $x_i$ as well. It is tempting to use the linear model result as a probability, but there is a fundamental problem with that: the output of the linear model \textit{can be less than 0 or greater than 1}, rendering the output meaningless. 
 
 To solve this problem, \textit{Logistic Regression} was introduced, with a mathematical model that actually restricts the dependent variable value in the range $[0,1]$. In reality, the model is estimating \textit{the probability} of a categorical outcome, i.e. the likelihood of one discrete output result versus another. The general Logistic Regression formula for two outcomes (0 or 1) can be written as \[P(Y=1) = \frac{1}{1+e^-(a_0+\sum a_i x_i)}\]
 Though the independent variables may either be continuous or discrete, the result of the model is a probability of the dependent output taking the given discrete value.\footnote{https://www.quora.com/What-is-logistic-regression}
 
-Logistic Regression was the approach finally undertaken by our group. Logistic regression is a \textit{binary classification} algorithm, which means that the result of its predictions is discrete by nature. This caters perfectly to our problem, namely deciding whether a user will click (click = 1) an ad or not (no click = 0). Also, all impression data used for learning is categorical, which is acceptable since predictor variables in Logistic Regression dependent variables may be both continuous or categorical. The underlying mechanism of Logistic Regression is Maximum Likelihood Estimation (MLE), a widely used statistical model for estimating the values of parameter variables that maximize the likelihood that the output takes the observed value. 
+Logistic Regression was the approach finally undertaken by our group. Logistic regression is a \textit{binary classification} algorithm, which means that the result of its predictions is discrete by nature. This caters perfectly to our problem, namely deciding whether a user will click (click = 1) an ad or not (no click = 0). Also, all impression data used for learning is categorical, which is acceptable since dependent variables in Logistic Regression may be both continuous or categorical. The underlying mechanism of Logistic Regression is Maximum Likelihood Estimation (MLE), a widely used statistical model for estimating the values of parameter variables that maximize the likelihood that the output takes an observed value. 
 
-[talk about data selection and overfitting]
+Before training the machine learning classifiers to make CTR predictions, there was a significant amount of work to be done in order to prepare the data for "learning". First, a high-level analysis (presented in detail in our individual reports) was useful in deciding on the good data features to be used for classification, i.e. the ones that do correlate with differences in the Click-Through Rate. Accordingly, several data fields that either had unique or highly differentiated values, such as the \textit{bidid} and the \textit{userid}, would not have been useful for classification and thus had to be removed. Therefore, some \textbf{data selection} was performed to remove those fields, as well as \textit{IP} (unique to each user), \textit{logtype} (1 in this dataset), \textit{domain}, \textit{url}, \textit{urlid}, \textit{creative}, \textit{keypage}, etc.
 
+Given the large volume of data with negative user feedback (click = 0) and the scarcity of impressions that led to conversions (click = 1), \textbf{undersampling} was also used to increase the ratio of clicked to non-clicked impressions in the training data. The small bias towards clicked impressions in training helped correct the bias in the original dataset, where only 0.077\% of all impressions were clicked.
+
+Subsequently, the data was tranformed using a technique known as \textit{one-hot encoding}. One-hot encoding creates a vector for every possible string value any feature can possibly take, transforming the feature-value mappings chosen for learning into sparse matrices, One-hot encoding tranforms complex feature-value mappings into simple (though very large) matrices with only binary digits, a conversion which is very helpful for mathematical computations as well as more convenient for machine learning classification algorithms.
+
+Since one-hot encoding vastly expands the feature space, we performed \textit{feature selection} to prevent long running times of our classification algorithms and avoid problems with Logistic Regression such as \textit{overfitting}. Essentially, a subset of the large feature space was chosen, which contained the \textit{best} predictor variables in terms of degree of correlation with the output pCTR. After experimenting with the number of features we'd allow, we observed the results of the solution after using 20, 40, and 60 features (in the linear bidding strategy) were extremely similar. For values above 100 features, the solution started producing inferior results. We concluded that there must be around twenty very good features for training, so we limited the selected features to 20.
+
+After this last step, the classifier is ready to be trained. The selected feature vectors are passed into the \textit{scikit-learn} library, and a logistic regression model is built to produce CTR predictions. It's worth noting that the option 'class weight' is set to \textit{balanced}, which means that the learning weights associated with feature classes are automatically adjusted to be inveresly proportional to class frequencies in the training data.
+
+After learning is completed, the validation dataset is loaded and some data manipulation is performed, as described above. Subsequently, the model is used to calculate CTR predictions for every impression in the validation dataset and store them in an in-memory array. The real-time bidding simulation can then be performed, and its results evaluated.
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{linear_bids.png}
+  \caption{Base bid vs. Placed bids}
+  \label{fig:bids}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{linear_wins.png}
+  \caption{Base bid vs. Wins}
+  \label{fig:bids}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{linear_clicks.png}
+  \caption{Base bid vs. Clicks}
+  \label{fig:bids}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{linear_CTR.png}
+  \caption{Base bid vs. CTR (\%)}
+  \label{fig:bids}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{linear_CPM.png}
+  \caption{Base bid vs. CPM}
+  \label{fig:bids}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[width=\linewidth]{linear_CPC.png}
+  \caption{Base bid vs. CPC}
+  \label{fig:bids}
+\end{figure}
 
 \subsubsection{Linear Bidding Strategy}
-[TODO]
+
+In this linear model strategy, the bidding price for a given impression is proportional to its predicted CTR. Specifially, the formula can be written as $bid = C * (pCTR / avg CTR) $, where C is a constant that we'll refer to as the \textit{base bid}. Conceptually, the base bid would be the bid price for an impression with average CTR, i.e. for which the ratio $pCTR / avg CTR$ is $1$. For impressions with higher-than-average predicted CTR, the ratio would be over 1 and the base bid would be proportionally higher than the value of the base bid.
+
+The first step was to calculate the mean CTR by averaging the value of the 'click' field in the training dataset. To decide on a good value for the constant \textit{base bid}, we varied the base bid value in the range $[0, 50]$ and ran the evaluation process numerous times. The results appear in Figures 9 through 14.
+
+Figures 9 and 10 plot the base bid against the bumber of bids placed and the number of bids won respectively. The two graphs are compatible: for small base bid values, the whole budget never gets spent, s othe number of bids placed is constant and equal to the total number of impressions in the dataset, as evidence by the linear horizontal trend in Figure 9. Since the base bid is small, the corresponding range in Figure 10 shows an increasing trend in wins, as increasing the base bid leads to more percentage of the budget being spent, and thus more wins. After the threshold value of 7, where the global maximum of Figure 10 is observed,  the trend in both graphs becomes asymptotically decreasing. The whole budget is now being spent, and an increasing base bid implies more expensive - and thus less - auctions being won.
+
+Figures 11 and 12 plot the absolute number of clicks and click-through rate percentages respectively, for the same range of base bids as figures 9 and 10. As expected, for very small base bids, no clicks are observed. Interestingly, the maximum CTR of the solution is the first non-zero data point, where $base bid = 5$. Eight conversions are achieved with the particular value, for a reasonably high CTR value of $0.263\%$, the peak of the CTR plot. The trend of figure 11 is strictly non-increasing from that point on, whereas in figure 12 several local maxima are observed. Above a base bid value of $9$, however, the CTR consistently remains under $0.1\%$.
+
+Finally, figures 13 and 14 present money-related metrics, namely CPM and CPC as functions of the base bid. The most cost-efficient point seems to be the one with highest CTR, namely $base bid = 5$, where $CPM = 4.33$ and $CPC = 1642$. The trend in each figure is non-decreasing, which makes intuitive sense. Accoording to figures 10 and 11, both the number of wins and the number of clicks are decreasing as the base bid increases. Therefore, since the whole budget is spent, both the cost per million impressions and the average cost per click must be increasing.
+
+For the determined optimal base bid value of $5$, we were quite satisfied with the results of our linear model. The CTR rate $0.263\%$, or more that 2 per 1000 ads being clicked, was better performance than we expected from a linear model solution. Of course, this performance constitutes a $10^3$ order of magnitude improvement over the approaches in section 4.1. It's already clear that CTR prediction through supervised learning is a huge step forward in developing successful and efficient strategies for real-time bidding.
 
 \subsubsection{Non-linear Bidding Strategy}
-
 
 [TODO]
 

@@ -22,9 +22,15 @@ trainFile = 'dataset/train.csv'
 validateFile = 'dataset/validation.csv'
 testFile = 'dataset/test.csv'
 out_file = 'dataset/testing_bidding_price.csv'
+<<<<<<< HEAD
+BALANCED = 'balanced'
+K_FEATS = 30
+ZERO_MULT = 100
+=======
 BALANCED = None #'balanced'
 K_FEATS = 100
 ZERO_MULT = 10
+>>>>>>> 0425af7cc6fd258f06d5645dbe3f909353a4c216
 C = 1e6
 BASE_BID = 50
 
