@@ -12,7 +12,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.naive_bayes import GaussianNB
 import sklearn.metrics as mets
 
-from polylearn import FactorizationMachineClassifier
+#from polylearn import FactorizationMachineClassifier
 #improve pCTR
 #write non-linear model
 #machine learning for c and langrangian multiplier
@@ -170,6 +170,8 @@ pCats = stratifier.predict(val_features)
 pCTR = model.predict_proba(val_features)[:, 1]
 pCTR_click = pCTR[val_df['click'] == 1]
 pCTR_nonclick = pCTR[val_df['click'] == 0]
+print(pCTR_click)
+print (pCTR_nonclick)
 print('Average Click pCTR: %f' % np.average(pCTR_click))
 print('Median Click pCTR: %f' %np.median(pCTR_click))
 print('Average Nonclick pCTR: %f' %np.average(pCTR_nonclick))
