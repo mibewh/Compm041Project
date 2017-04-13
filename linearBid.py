@@ -1,65 +1,122 @@
-from common import Data, evaluate
-from sklearn import linear_model
 import numpy as np
-from sklearn.preprocessing import Imputer, OneHotEncoder
+import sys
+import pandas as pd
+import matplotlib.pyplot as plt
+import sklearn.metrics as mets
+from sklearn.preprocessing import OneHotEncoder, normalize
+from sklearn.feature_extraction import DictVectorizer
+from sklearn.feature_selection import SelectKBest, chi2
+from sklearn_pandas import DataFrameMapper
+from sklearn.ensemble import RandomForestClassifier
 
-# Useful for dealing with categorical features (OneHot) and impressions with missing values
-# http://scikit-learn.org/stable/modules/preprocessing.html
+trainFile = 'dataset/train.csv'
+validateFile = 'dataset/validation.csv'
+testFile = 'dataset/test.csv'
+out_file = 'dataset/testing_bidding_price.csv'
 
-imp = Imputer(strategy='most_frequent')
-ohe = OneHotEncoder(categorical_features=[0,1,2,3,4,5,6,7,8], sparse=True)
+BASE_BID = 60
+ZERO_MULT = 10
 
-#Maybe reduce this to just OS, as browser is less relevant?
-agents = {'linux_chrome':0, 'linux_firefox':1, 'other_firefox':2, 'windows_safari':3, 'other_other':4, 'windows_other':5,\
-        'ios_other':6, 'mac_ie':7, 'ios_safari':8, 'mac_firefox':9, 'linux_safari':10, 'mac_safari':11, 'other_ie':12,\
-        'android_firefox':13, 'windows_chrome':14, 'windows_theworld':15, 'android_maxthon':16, 'other_opera':17, 'linux_other':18,\
-        'linux_opera':19, 'mac_maxthon':20, 'android_chrome':21, 'mac_other':22, 'android_opera':23, 'android_ie':24, 'windows_ie':25,\
-        'windows_maxthon':26, 'linux_ie':27, 'mac_sogou':28, 'android_other':29, 'mac_chrome':30, 'mac_opera':31, 'other_chrome':32,\
-        'windows_firefox':33, 'other_safari':34, 'windows_sogou':35, 'android_safari':36, 'android_sogou':37, 'windows_opera':38}
-visibility = {'0':0, '1':1, '2':2, '255':3, 'FirstView':4, 'SecondView':5, 'ThirdView':6, 'FourthView':7, 'FifthView':8,\
-            'OtherView':9, 'Na':np.nan}
+dv = DictVectorizer()
+kbest = SelectKBest(chi2, k=100)
 
-def convertBidArr(bid):
-    #Add back adexchange and slotformat? These have some bad data... useragent?
-    if bid.slotformat == 'Na': bid = bid._replace(slotformat=np.nan)
-    if bid.adexchange == 'null': bid = bid._replace(adexchange=np.nan)
-    bid = bid._replace(useragent=agents[bid.useragent], slotvisibility=visibility[bid.slotvisibility])
-    # Add back useragent to the return statement AND ohe if you want it in
-    return np.array([bid.weekday,bid.hour,bid.region,bid.city,bid.useragent\
-                ,bid.advertiser, bid.slotformat, bid.adexchange, bid.slotvisibility\
-                ,bid.slotwidth,bid.slotheight,bid.slotprice], dtype=np.float32)
+columns = ['click','payprice','bidprice','bidid','weekday','hour','region','useragent',\
+            'slotformat','adexchange','slotvisibility',\
+            'slotwidth','slotheight','slotprice','creative','keypage', 'advertiser', 'city']
 
-def preprocess(xarr):
-    xarr = imp.transform(xarr)
-    xarr = ohe.transform(xarr)
-    return xarr
+test_columns = columns[3:]
 
-def learnModel(trainFileName):
-    xdata = []
-    ydata = []
-    for bid in Data(trainFileName):
-        xdata.append(convertBidArr(bid))
-        ydata.append(int(bid.click))
-    xarr = np.array(xdata)
-    print('Preprocessing...')
-    xarr = imp.fit_transform(xarr) # Can't just use preprocess here because the imputer needs to be fitted first (as well as transformed)
-    ohe.fit(xarr)
-    xarr = ohe.transform(xarr)
-    yarr = np.array(ydata)
-    avgCTR = np.average(yarr)
-    print('Learning...')
-    lr = linear_model.LogisticRegression(C=1, n_jobs=-1)
-    lr.fit(xarr, yarr)
-    return lr, avgCTR
+def undersample(data, zeroMult=1):
+    click_ind = data[data.click == 1].index
+    nonclick_ind = data[data.click == 0].index
+    numSamples = zeroMult * len(click_ind)
+    sample_ind = np.random.choice(nonclick_ind, numSamples, replace=False)
+    nonclick_samples = data.loc[sample_ind]
+    click_samples = data.loc[click_ind]
+    return pd.concat([nonclick_samples,click_samples], ignore_index=True)
 
-def calculateBid(bid, baseBid, model, averageCTR):
-    arr = preprocess(convertBidArr(bid).reshape(1,-1)).toarray()
-    pCTR = model.predict_proba(arr)[0][1]
-    return baseBid * pCTR / averageCTR
+def getFeatures(data, fit=False):
+    global dv, kbest
+    data = data.drop('bidid', axis=1) # Don't need bidid to find features
+    metrics = ['click','payprice','bidprice'] # Bid price must be considered a metric because it is not present in the test data, and therefore cannot be used as a feature in the model
+    agent_info = pd.DataFrame(np.array([[item for item in agent.split('_')] for agent in data.useragent]), columns=['os','browser'])
+    data = data.drop('useragent',axis=1).join(agent_info)
+    weekend_info = pd.DataFrame(np.array([1 if 2<=int(weekday)<=4 else 0 for weekday in data.weekday]))
+    peak_info = pd.DataFrame(np.array([1 if 16<=int(hour)<=19 else 0 for hour in data.hour]))
+    area_info = pd.DataFrame(np.array([int(dim['slotwidth'])*int(dim['slotheight']) for i,dim in data.iterrows()]))
+    mobile_info = pd.DataFrame(np.array([1 if os in ['android','ios'] else 0 for os in data.os]))
+    data = data.drop(['weekday','hour','slotwidth','slotheight'],axis=1)
+    data['weekend'] = weekend_info
+    data['peak'] = peak_info
+    data['area'] = area_info
+    data['mobile'] = mobile_info
+    
+    if fit:
+        vec = dv.fit_transform(data.drop(metrics, axis=1).to_dict(orient='records'))
+    else:
+        vec = dv.transform(data.drop(metrics, axis=1).to_dict(orient='records'))
+    vec = normalize(vec, axis=1)
+    if fit:
+        kbest.fit(vec, data['click'])
+    features = kbest.transform(vec)
+
+    return features
 
 
-baseBid = 200
-print('Begin Learning...')
-lr, avgCTR = learnModel('dataset/train.csv')
+def loadData(fileName, train=False, test=False):
+    print('Loading data (%s)...' % fileName)
+    if not test: df = pd.read_csv(fileName, usecols=columns, dtype={'weekday':object,'hour':object,'region':object,'city':object,'advertiser':object})
+    else: df = pd.read_csv(fileName, usecols=test_columns, dtype={'weekday':object,'hour':object,'region':object,'city':object,'advertiser':object})
+    print('Preprocessing (%s)...' % fileName)
+    if train: df = undersample(df, zeroMult=ZERO_MULT)
+    features = getFeatures(df, fit=train)
+    return df, features
+
+
+def getpredictionLINEAR(pCTR, avgCTR):
+    return BASE_BID * pCTR / avgCTR
+
+def outputTestResults(model):
+    test_df, test_features = loadData(testFile, train=False, test=True)
+    guesses = getPredictionsORTB1(model, test_features)
+    # Prepare output dataframe and send it to csv file
+    out_df = pd.DataFrame({'bidid': test_df['bidid'], 'bidprice': guesses})
+    out_df.to_csv(out_file, index=False)
+    
+train_df, train_features = loadData(trainFile, train=True)
+avgCTR = train_df['click'].mean()
+print('Learning...')
+model = RandomForestClassifier(n_estimators=100, criterion='gini', max_features='auto', class_weight={0:1,1:2}) #increasing the 1 weight increases both true and false positives
+model.fit(train_features, train_df.click)
+# outputTestResults(model)
+
+#Evalute Model on validation set
 print('Evaluating...')
-evaluate('dataset/validation.csv', calculateBid, baseBid, lr, avgCTR)
+val_df, val_features = loadData(validateFile, train=False)
+pCTR = model.predict_proba(val_features)[:, 1]
+
+bidsPlaced = 0
+numWins = 0
+clicks = 0
+spent = 0
+clicksMissed = 0
+for i in range(len(pCTR)):
+    bidAmt = getpredictionLINEAR(pCTR[i], avgCTR)
+    bid = val_df.iloc[i]
+    if (spent + bidAmt) <= 25000000: #Would not place bid if the bid amount surpasses the budget
+        bidsPlaced += 1
+        if bidAmt > bid.payprice:
+            numWins += 1
+            clicks += bid.click
+            spent += bid.payprice
+        else:
+            if bid.click == 1:
+                clicksMissed += 1
+print('Bids Placed: %d' % bidsPlaced)
+print('Wins: %d' % numWins)
+print('Clicks Missed: %d' % clicksMissed)
+print('CTR: %f' % (clicks / numWins)) #Only need to consider the ads we paid for
+print('Conversions: %d' % (clicks))
+print('Spend: %d' % (spent/1000))
+print('Average CPM: %f' % (spent / numWins))
+print('Average CPC: %f' % (spent / clicks / 1000))
