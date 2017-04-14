@@ -32,7 +32,7 @@ Real-Time Bidding (RTB) is an increasingly popular approach to online advertisin
 
 The challenge in automating ad auctions and bidding in real-time is the necessity to predict, with the highest possible accuracy, the likelihood that the ads displayed to a particular user will actually be of interest to them. Using those predictions, hereby referred to as pCTR (or predicted Click-Through Rate), a strategy can be developed to optimize the number of won impressions (which the advertiser pays for) that have the potential of becoming conversions. Naturally, the accuracy and sensitivity of the pCTR values in central in developing a successful bidding strategy.
 
-Given real-life ad impression data, a machine learning approach is often preferred in tackling this problem. First, a large data set with \textit{training} data is used to build and optimize some type of machine learning classifier. After the machine learning model is trained, it is used to make predictions about data in a \textit{test} data set, for which user feedback is not provided, thus attempting to predict unknown users' behavior. The success of the classifier is evaluated by different metrics that reflect its accuracy in anticipating an unknown user's responsiveness to an ad. 
+Given real-life ad impression data, a machine learning approach is often preferred in tackling this problem. First, a large data set with \textit{training} data is used to build and optimize some type of machine learning classifier. After the machine learning model is trained, it is used to make predictions about data in a \textit{test} data set, for which user feedback is not provided, thus attempting to predict unknown users' behavior. The success of the classifier is evaluated by different metrics that reflect its accuracy in anticipating an unknown user's responsiveness to an ad.
 
 Therefore, in attempting to predict user behavior, a thorough and educated study and use of the training data is required for accurate and useful results. Our individual reports present some data analytics that result from a basic exploration of the training data set provided for the assignment.
 
@@ -82,15 +82,15 @@ Python was used for developing the main functionality of all the solutions and l
   \label{fig:CPM}
 \end{figure}
 
-The first strategy was a rather simple one; the solution had to bid the same constant value in every auction. Given the budget constraint of $25,000$, the task can be treated as an optimization problem with the following limiting cases: the algorithm's bids are too high, which results to all auctions being won and the budget rapidly running out; or the algorithm's bids are too low, which results to too few auctions being won and the budget not being spent. 
+The first strategy was a rather simple one; the solution had to bid the same constant value in every auction. Given the budget constraint of $25,000$, the task can be treated as an optimization problem with the following limiting cases: the algorithm's bids are too high, which results to all auctions being won and the budget rapidly running out; or the algorithm's bids are too low, which results to too few auctions being won and the budget not being spent.
 
 Clearly, the optimal solution lies somewhere in between the two limiting cases. This approach would in theory help us win more bids than choosing a constant bid by chance, and assuming that impressions that will be clicked are uniformly distributed in the dataset, it also increases the expected CTR, since the budget will all be spent, but not immediately and on consecutive bids. To optimize our constant bid value, we repeated the evaluation process for every constant bid value in the range [10, 20, ..., 400]. We then plotted that range of possible values against several evaluation metrics, with the results presented in figures 1-6.
 
 Figures 1 and 2 show the constant bid value plotted against the bids placed and the bids won by the solution respectively. The results are perfectly consistent with the notion that a high constant bid value places less bids and wins less auctions that a lower one. As such, when the solution stops bidding in all auctions (i.e. runs out of money before running out of impressions), both graphs are asymptotically decreasing.
 
-Figure 3 plots the bid value against the number of clicked impressions. The peak of absolute clicks is observed around a constant bid value of $110$, with 130 clicks. The rate at which clicks grow as a function of the bid before that global maximum is much higher than the rate of descent thereafter, because slight increases in the bidding price before the maximum can encapsulate many more won impressions, whereas after the peak, they just decrease the number of total auctions, but not necessarily ones that lead to conversions. 
+Figure 3 plots the bid value against the number of clicked impressions. The peak of absolute clicks is observed around a constant bid value of $110$, with 130 clicks. The rate at which clicks grow as a function of the bid before that global maximum is much higher than the rate of descent thereafter, because slight increases in the bidding price before the maximum can encapsulate many more won impressions, whereas after the peak, they just decrease the number of total auctions, but not necessarily ones that lead to conversions.
 
-Figure 4 plots the CTR against the constant bid price. Although the absolute number of clicks is decreasing after the global maximum, the CTR has an increasing trend throughout. This can be attributed to the fact the the clicks curve is decending linearly (in approximation), whereas the wins plot is decending in a higher rate.
+Figure 4 plots the CTR against the constant bid price. Although the absolute number of clicks is decreasing after the global maximum, the CTR has an increasing trend throughout. This can be attributed to the fact the the clicks curve is descending linearly (in approximation), whereas the wins plot is descending in a higher rate.
 
 \begin{figure}
   \includegraphics[width=\linewidth]{constant_cpm.png}
@@ -106,7 +106,7 @@ Figure 4 plots the CTR against the constant bid price. Although the absolute num
 
 Figures 5 and 6 plot the CPM and CPC against the constant bid respectively. The average cost per million impressions expectedly increases since higher constant bids implies more expensive auctions being won, and thus more money being spent per million impressions. The average cost per click is initially increasing, before remaining relatively stable for the rest of the test range. This can be explained since as the constant bid increases, so does the number of clicks, but the number of won impressions decreases as a result of more expensive auctions being won. Assuming the clicks are evenly distributed in the dataset, the CPC should indeed not vary  much.
 
-Whereas the CTR is increasing throughout the range, the average cost per million impressions is also increasing, which means that the optimal approach using the constant bid strategy is not necessarily the approach that yields the highest CTR, but rather a tradeoff between the cost and efficiency. Consequently, the CPC may be a better metric to rely upon, since a local minimum in the CPC plot maximizes the efficiency of money in terms of conversions achieved. For instance, a good pick for the constant bid would be the value $230$. The corresponding CTR value is $0.085\%$, which is among the highest percentages in the plot, and the CPC is at a local minimum of $86,200$ per click. Clearly, this solution is not efficient financially, and hopefully the CPC value will drop drastically in latter solutions.
+Whereas the CTR is increasing throughout the range, the average cost per million impressions is also increasing, which means that the optimal approach using the constant bid strategy is not necessarily the approach that yields the highest CTR, but rather a trade off between the cost and efficiency. Consequently, the CPC may be a better metric to rely upon, since a local minimum in the CPC plot maximizes the efficiency of money in terms of conversions achieved. For instance, a good pick for the constant bid would be the value $230$. The corresponding CTR value is $0.085\%$, which is among the highest percentages in the plot, and the CPC is at a local minimum of $86,200$ per click. Clearly, this solution is not efficient financially, and hopefully the CPC value will drop drastically in latter solutions.
 
 A constant bid value of $110$ yielded the maximum number of clicks, specifically 130 clicks. The CTR for the particular bid was $0.057\%$. If optimizing for CTR, on the other hand, a constant bid of 390 yielded $0.094\%$ conversions, which was the highest percentage observed, but a much lower absolute number of clicks, specifically 58. This is due to the fact that such a high constant bid value wins significantly less auctions, so clicked impressions represent an overall higher percentage of impressions won.
 
@@ -135,7 +135,7 @@ A constant bid value of $110$ yielded the maximum number of clicks, specifically
 \end{figure}
 
 \begin{figure}
-  \includegraphics[width=\linewidth]{random_cpm.png}
+  \includegraphics[width=\linewidth]{random_CPM.png}
   \caption{Upper bound vs. CPM}
   \label{fig:CPM}
 \end{figure}
@@ -152,7 +152,7 @@ The second simple strategy we explored introduced randomness in the strategy's b
 
 To enforce the upper bounds, we used a Python function to generate pseudo-random numbers in the range $[0,1]$, and then multiplied them by our upper bounds, thus getting a series of pseudo-randomly generated real values in the range $[0, UpperBound]$.
 
-Figures 7 and 8 show the number of placed bids and wins respectively, as a function of the upper bound fed into our pseudo-random number generator. As expected, increasing the upper bound of the random bids leads to a decrease in the expected average number of bids placed. Rougly around the value $200$, the solution starts exhausting the budget by buying more expensive auctions, thus the decending trend in figure 7. At the same value, figure 8 peaks and then start decreasing for the same reason.
+Figures 7 and 8 show the number of placed bids and wins respectively, as a function of the upper bound fed into our pseudo-random number generator. As expected, increasing the upper bound of the random bids leads to a decrease in the expected average number of bids placed. Roughly around the value $200$, the solution starts exhausting the budget by buying more expensive auctions, thus the descending trend in figure 7. At the same value, figure 8 peaks and then start decreasing for the same reason.
 
 Figure 9, which plots the upper bound against the number of clicked impressions, reveals why a random-based approach to solving the problem is bound to not perform reliably well. Although repeating the experiment infinite times would give expected values that follow a consistent trend, even five repetitions lead to (average) values with some variance from an approximate curve like the one observed in figure 3.
 
@@ -229,7 +229,7 @@ Average CPC&44.97\\
 
 The process that we used in our non-linear strategy for learning pCTRs can be found in our machine learning strategies section. The strategy equation that we used was the ORTB1 strategy\footnote{http://wnzhang.net/papers/ortb-kdd.pdf}, which uses the following equation:
 \begin{equation}\sqrt{\frac{c\theta}{\lambda}+c^2}-c\end{equation}
-where $\lambda$ is the langrangian multiplier, $c$ is a constant, and $\theta$ is
+where $\lambda$ is the Lagrangian multiplier, $c$ is a constant, and $\theta$ is
 the input pCTR value. Through trial and error, the best values for the tunable variables determined by our configuration were $\lambda=5*10^{-6}$ and
 $c=200$. We use 30 times as many nonclicks as clicks in our undersampling process,
 and weight clicks 20 times as much in our learning process. The results and evaluation metrics are detailed in Table 2.
