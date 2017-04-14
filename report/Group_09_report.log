@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.4.5)  14 APR 2017 18:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.4.5)  14 APR 2017 18:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -220,7 +220,32 @@ LaTeX Font Info:    Try loading font information for T1+aer on input line 105.
 (/usr/local/texlive/2016basic/texmf-dist/tex/latex/ae/t1aer.fd
 File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
 )))
-No file Group_09_report.aux.
+(./Group_09_report.aux
+
+LaTeX Warning: Label `fig:CPM' multiply defined.
+
+
+LaTeX Warning: Label `fig:CPM' multiply defined.
+
+
+LaTeX Warning: Label `fig:bids' multiply defined.
+
+
+LaTeX Warning: Label `fig:wins' multiply defined.
+
+
+LaTeX Warning: Label `fig:clicks' multiply defined.
+
+
+LaTeX Warning: Label `fig:CPM' multiply defined.
+
+
+LaTeX Warning: Label `fig:CPM' multiply defined.
+
+
+LaTeX Warning: Label `fig:CPM' multiply defined.
+
+)
 \openout1 = `Group_09_report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
@@ -235,7 +260,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 5.
 LaTeX Font Info:    ... okay on input line 5.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
 LaTeX Font Info:    ... okay on input line 5.
-(/usr/local/texlive/2016basic/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+ (/usr/local/texlive/2016basic/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count111
 \scratchdimen=\dimen123
@@ -378,148 +403,114 @@ Package pdftex.def Info: constant_cpc.png used on input line 102.
 <random_bids.png, id=29, 1189.44376pt x 706.64pt>
 File: random_bids.png Graphic file (type png)
  <use random_bids.png>
-Package pdftex.def Info: random_bids.png used on input line 112.
+Package pdftex.def Info: random_bids.png used on input line 114.
 (pdftex.def)             Requested size: 240.0pt x 142.57625pt.
 
 <random_wins.png, id=30, 1188.44pt x 707.64375pt>
 File: random_wins.png Graphic file (type png)
  <use random_wins.png>
-Package pdftex.def Info: random_wins.png used on input line 118.
+Package pdftex.def Info: random_wins.png used on input line 120.
 (pdftex.def)             Requested size: 240.0pt x 142.89755pt.
 
 <random_clicks.png, id=31, 1186.4325pt x 707.64375pt>
 File: random_clicks.png Graphic file (type png)
  <use random_clicks.png>
-Package pdftex.def Info: random_clicks.png used on input line 124.
+Package pdftex.def Info: random_clicks.png used on input line 126.
 (pdftex.def)             Requested size: 240.0pt x 143.1459pt.
 
 <random_ctr.png, id=32, 1188.44pt x 711.65875pt>
 File: random_ctr.png Graphic file (type png)
  <use random_ctr.png>
-Package pdftex.def Info: random_ctr.png used on input line 130.
+Package pdftex.def Info: random_ctr.png used on input line 132.
 (pdftex.def)             Requested size: 240.0pt x 143.70831pt.
 
 <random_cpm.png, id=33, 1187.43625pt x 711.65875pt>
 File: random_cpm.png Graphic file (type png)
  <use random_cpm.png>
-Package pdftex.def Info: random_cpm.png used on input line 136.
+Package pdftex.def Info: random_cpm.png used on input line 138.
 (pdftex.def)             Requested size: 240.0pt x 143.83862pt.
 
 <random_cpc.png, id=34, 1190.4475pt x 708.6475pt>
 File: random_cpc.png Graphic file (type png)
  <use random_cpc.png>
-Package pdftex.def Info: random_cpc.png used on input line 142.
+Package pdftex.def Info: random_cpc.png used on input line 144.
 (pdftex.def)             Requested size: 240.0pt x 142.86237pt.
- [3 <./constant_cpm.png> <./constant_cpc.png> <./random_bids.png> <./random_win
-s.png>]
-[4 <./random_clicks.png> <./random_ctr.png> <./random_cpm.png> <./random_cpc.pn
-g>]
-Overfull \hbox (3.17345pt too wide) in paragraph at lines 177--178
+ [3 <./constant_cpm.png> <./constant_cpc.png> <./random_bids.png>] [4 <./random
+_wins.png> <./random_clicks.png> <./random_ctr.png> <./random_cpm.png> <./rando
+m_cpc.png>]
+Overfull \hbox (3.17345pt too wide) in paragraph at lines 181--182
 []\T1/aer/m/n/9 After learn-ing is com-pleted, the val-i-da-tion dataset is loa
 ded
  []
 
 
-Overfull \hbox (4.51428pt too wide) in paragraph at lines 177--178
+Overfull \hbox (4.51428pt too wide) in paragraph at lines 181--182
 \T1/aer/m/n/9 and some data ma-nip-u-la-tion is per-formed, as de-scribed above
 .
  []
 
 
-Overfull \hbox (10.6456pt too wide) in paragraph at lines 181--182
+Underfull \vbox (badness 1735) has occurred while \output is active []
+
+ [5]
+Overfull \hbox (10.6456pt too wide) in paragraph at lines 185--186
 \T1/aer/m/n/9 sion with av-er-age CTR, i.e. for which the ra-tio $\OML/cmm/m/it
 /9 pCTR=avgCTR$
  []
 
-
-LaTeX Warning: Reference `ml' on page \thepage  undefined on input line 183.
-
-
-LaTeX Warning: Reference `clicksbb' on page \thepage  undefined on input line 1
-83.
-
-
-LaTeX Warning: Reference `ctrbb' on page \thepage  undefined on input line 183.
-
-
-
-LaTeX Warning: Reference `clicksbb' on page \thepage  undefined on input line 1
-83.
-
-
-LaTeX Warning: Reference `ctrbb' on page \thepage  undefined on input line 183.
-
-
-
-LaTeX Warning: Reference `clicksbbs' on page \thepage  undefined on input line 
-183.
-
-
-LaTeX Warning: Reference `ctrbbs' on page \thepage  undefined on input line 183
-.
-
-<linear_clicks.png, id=49, 1189.44376pt x 706.64pt>
+<linear_clicks.png, id=55, 1189.44376pt x 706.64pt>
 File: linear_clicks.png Graphic file (type png)
  <use linear_clicks.png>
-Package pdftex.def Info: linear_clicks.png used on input line 201.
+Package pdftex.def Info: linear_clicks.png used on input line 205.
 (pdftex.def)             Requested size: 240.0pt x 142.57625pt.
 
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<linear_CTR.png, id=50, 1186.4325pt x 706.64pt>
+<linear_CTR.png, id=56, 1186.4325pt x 706.64pt>
 File: linear_CTR.png Graphic file (type png)
  <use linear_CTR.png>
-Package pdftex.def Info: linear_CTR.png used on input line 207.
+Package pdftex.def Info: linear_CTR.png used on input line 211.
 (pdftex.def)             Requested size: 240.0pt x 142.94286pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<linear_clicks_specific.png, id=51, 1204.5pt x 803.0pt>
+<linear_clicks_specific.png, id=57, 1204.5pt x 803.0pt>
 File: linear_clicks_specific.png Graphic file (type png)
 
 <use linear_clicks_specific.png>
-Package pdftex.def Info: linear_clicks_specific.png used on input line 213.
+Package pdftex.def Info: linear_clicks_specific.png used on input line 217.
 (pdftex.def)             Requested size: 240.0pt x 159.99677pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<linear_CTR_specific.png, id=52, 1204.5pt x 803.0pt>
+<linear_CTR_specific.png, id=58, 1204.5pt x 803.0pt>
 File: linear_CTR_specific.png Graphic file (type png)
 
 <use linear_CTR_specific.png>
-Package pdftex.def Info: linear_CTR_specific.png used on input line 219.
+Package pdftex.def Info: linear_CTR_specific.png used on input line 223.
 (pdftex.def)             Requested size: 240.0pt x 159.99677pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[5]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-
-Overfull \hbox (1.37526pt too wide) in paragraph at lines 252--253
+[6 <./linear_clicks.png> <./linear_CTR.png> <./linear_clicks_specific.png> <./l
+inear_CTR_specific.png>]
+Overfull \hbox (1.37526pt too wide) in paragraph at lines 256--257
 \T1/aer/m/n/9 steps would be to im-prove our un-der-sam-pling method. While
  []
 
-[6 <./linear_clicks.png> <./linear_CTR.png> <./linear_clicks_specific.png> <./l
-inear_CTR_specific.png>] [7
+[7] (./Group_09_report.aux)
 
-] (./Group_09_report.aux)
-
-LaTeX Warning: There were undefined references.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 3217 strings out of 494447
- 42375 string characters out of 6166767
- 114940 words of memory out of 5000000
+ 3219 strings out of 494447
+ 42415 string characters out of 6166767
+ 113073 words of memory out of 5000000
  6452 multiletter control sequences out of 15000+600000
  50604 words of font info for 68 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
@@ -539,7 +530,7 @@ helvetic/uhvb8a.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/urw/he
 lvetic/uhvr8a.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/urw/time
 s/utmb8a.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/urw/times/utm
 ri8a.pfb>
-Output written on Group_09_report.pdf (7 pages, 546211 bytes).
+Output written on Group_09_report.pdf (7 pages, 546760 bytes).
 PDF statistics:
  114 PDF objects out of 1000 (max. 8388607)
  59 compressed objects within 1 object stream
