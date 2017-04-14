@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.4.5)  14 APR 2017 15:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.4.5)  14 APR 2017 18:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -220,50 +220,7 @@ LaTeX Font Info:    Try loading font information for T1+aer on input line 105.
 (/usr/local/texlive/2016basic/texmf-dist/tex/latex/ae/t1aer.fd
 File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
 )))
-(./Group_09_report.aux
-
-LaTeX Warning: Label `fig:CPM' multiply defined.
-
-
-LaTeX Warning: Label `fig:CPM' multiply defined.
-
-
-LaTeX Warning: Label `fig:bids' multiply defined.
-
-
-LaTeX Warning: Label `fig:wins' multiply defined.
-
-
-LaTeX Warning: Label `fig:clicks' multiply defined.
-
-
-LaTeX Warning: Label `fig:CPM' multiply defined.
-
-
-LaTeX Warning: Label `fig:CPM' multiply defined.
-
-
-LaTeX Warning: Label `fig:CPM' multiply defined.
-
-
-LaTeX Warning: Label `fig:bids' multiply defined.
-
-
-LaTeX Warning: Label `fig:bids' multiply defined.
-
-
-LaTeX Warning: Label `fig:bids' multiply defined.
-
-
-LaTeX Warning: Label `fig:bids' multiply defined.
-
-
-LaTeX Warning: Label `fig:bids' multiply defined.
-
-
-LaTeX Warning: Label `fig:bids' multiply defined.
-
-)
+No file Group_09_report.aux.
 \openout1 = `Group_09_report.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 5.
@@ -278,7 +235,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 5.
 LaTeX Font Info:    ... okay on input line 5.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
 LaTeX Font Info:    ... okay on input line 5.
- (/usr/local/texlive/2016basic/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+(/usr/local/texlive/2016basic/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count111
 \scratchdimen=\dimen123
@@ -468,64 +425,102 @@ Overfull \hbox (4.51428pt too wide) in paragraph at lines 177--178
 .
  []
 
-<linear_bids.png, id=49, 1188.44pt x 707.64375pt>
-File: linear_bids.png Graphic file (type png)
- <use linear_bids.png>
-Package pdftex.def Info: linear_bids.png used on input line 180.
-(pdftex.def)             Requested size: 240.0pt x 142.89755pt.
 
-<linear_wins.png, id=50, 1188.44pt x 709.65125pt>
-File: linear_wins.png Graphic file (type png)
- <use linear_wins.png>
-Package pdftex.def Info: linear_wins.png used on input line 186.
-(pdftex.def)             Requested size: 240.0pt x 143.30293pt.
-
-<linear_clicks.png, id=51, 1189.44376pt x 706.64pt>
-File: linear_clicks.png Graphic file (type png)
- <use linear_clicks.png>
-Package pdftex.def Info: linear_clicks.png used on input line 192.
-(pdftex.def)             Requested size: 240.0pt x 142.57625pt.
-
-<linear_CTR.png, id=52, 1186.4325pt x 706.64pt>
-File: linear_CTR.png Graphic file (type png)
- <use linear_CTR.png>
-Package pdftex.def Info: linear_CTR.png used on input line 198.
-(pdftex.def)             Requested size: 240.0pt x 142.94286pt.
-
-<linear_CPM.png, id=53, 1188.44pt x 706.64pt>
-File: linear_CPM.png Graphic file (type png)
- <use linear_CPM.png>
-Package pdftex.def Info: linear_CPM.png used on input line 204.
-(pdftex.def)             Requested size: 240.0pt x 142.69485pt.
-
-<linear_CPC.png, id=54, 1185.42876pt x 705.63625pt>
-File: linear_CPC.png Graphic file (type png)
- <use linear_CPC.png>
-Package pdftex.def Info: linear_CPC.png used on input line 210.
-(pdftex.def)             Requested size: 240.0pt x 142.85825pt.
-
-Overfull \hbox (10.6456pt too wide) in paragraph at lines 217--218
+Overfull \hbox (10.6456pt too wide) in paragraph at lines 181--182
 \T1/aer/m/n/9 sion with av-er-age CTR, i.e. for which the ra-tio $\OML/cmm/m/it
 /9 pCTR=avgCTR$
  []
 
-[5 <./linear_bids.png> <./linear_wins.png>]
-Overfull \hbox (5.35112pt too wide) in paragraph at lines 223--224
-\T1/aer/m/n/9 click-through rate per-cent-ages re-spec-tively, for the same ran
-ge
+
+LaTeX Warning: Reference `ml' on page \thepage  undefined on input line 183.
+
+
+LaTeX Warning: Reference `clicksbb' on page \thepage  undefined on input line 1
+83.
+
+
+LaTeX Warning: Reference `ctrbb' on page \thepage  undefined on input line 183.
+
+
+
+LaTeX Warning: Reference `clicksbb' on page \thepage  undefined on input line 1
+83.
+
+
+LaTeX Warning: Reference `ctrbb' on page \thepage  undefined on input line 183.
+
+
+
+LaTeX Warning: Reference `clicksbbs' on page \thepage  undefined on input line 
+183.
+
+
+LaTeX Warning: Reference `ctrbbs' on page \thepage  undefined on input line 183
+.
+
+<linear_clicks.png, id=49, 1189.44376pt x 706.64pt>
+File: linear_clicks.png Graphic file (type png)
+ <use linear_clicks.png>
+Package pdftex.def Info: linear_clicks.png used on input line 201.
+(pdftex.def)             Requested size: 240.0pt x 142.57625pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<linear_CTR.png, id=50, 1186.4325pt x 706.64pt>
+File: linear_CTR.png Graphic file (type png)
+ <use linear_CTR.png>
+Package pdftex.def Info: linear_CTR.png used on input line 207.
+(pdftex.def)             Requested size: 240.0pt x 142.94286pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<linear_clicks_specific.png, id=51, 1204.5pt x 803.0pt>
+File: linear_clicks_specific.png Graphic file (type png)
+
+<use linear_clicks_specific.png>
+Package pdftex.def Info: linear_clicks_specific.png used on input line 213.
+(pdftex.def)             Requested size: 240.0pt x 159.99677pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+<linear_CTR_specific.png, id=52, 1204.5pt x 803.0pt>
+File: linear_CTR_specific.png Graphic file (type png)
+
+<use linear_CTR_specific.png>
+Package pdftex.def Info: linear_CTR_specific.png used on input line 219.
+(pdftex.def)             Requested size: 240.0pt x 159.99677pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[5]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+Overfull \hbox (1.37526pt too wide) in paragraph at lines 252--253
+\T1/aer/m/n/9 steps would be to im-prove our un-der-sam-pling method. While
  []
 
-[6 <./linear_clicks.png> <./linear_CTR.png> <./linear_CPM.png> <./linear_CPC.pn
-g>] [7] (./Group_09_report.aux)
+[6 <./linear_clicks.png> <./linear_CTR.png> <./linear_clicks_specific.png> <./l
+inear_CTR_specific.png>] [7
 
-LaTeX Warning: There were multiply-defined labels.
+] (./Group_09_report.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 3224 strings out of 494447
- 42458 string characters out of 6166767
- 112028 words of memory out of 5000000
- 6455 multiletter control sequences out of 15000+600000
+ 3217 strings out of 494447
+ 42375 string characters out of 6166767
+ 114940 words of memory out of 5000000
+ 6452 multiletter control sequences out of 15000+600000
  50604 words of font info for 68 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
  41i,10n,35p,1129b,274s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -544,10 +539,10 @@ helvetic/uhvb8a.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/urw/he
 lvetic/uhvr8a.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/urw/time
 s/utmb8a.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/urw/times/utm
 ri8a.pfb>
-Output written on Group_09_report.pdf (7 pages, 586291 bytes).
+Output written on Group_09_report.pdf (7 pages, 546211 bytes).
 PDF statistics:
- 118 PDF objects out of 1000 (max. 8388607)
+ 114 PDF objects out of 1000 (max. 8388607)
  59 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 91 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 81 words of extra memory for PDF output out of 10000 (max. 10000000)
 

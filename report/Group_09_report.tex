@@ -156,7 +156,7 @@ Figure 9, which plots the upper bound against the number of clicked impressions,
 
 Figures 10, 11, 12 look similar to figures 4, 5 and 6 respectively, as the expected results from repeated trials in the random bid solution should closely resemble the results of the constant bid approach, always with some variance due to the degree of randomness involved in the particular bidding approach.
 
-\subsection{Machine Learning Strategies}
+\subsection{Machine Learning Strategies} \label{ml}
 Several regression and classification machine learning algorithms were considered by our team. The problem lends itself well for supervised learning; the training dataset does contain auction results as well as user feedback, and the goal is to build a classifier that produce a CTR estimate for any given impression. Our initial instinct was to use Linear Regression, a quite familiar and conceptually simple approach. Linear Regression uses the general linear function $y = a_0 +  \sum a_i x_i$, where the dependent variable $y$ is \textit{continuous}, as is \textit{usually} the case for the independent variables $x_i$ as well. It is tempting to use the linear model result as a probability, but there is a fundamental problem with that: the output of the linear model \textit{can be less than 0 or greater than 1}, rendering the output meaningless.
 
 To solve this problem, \textit{Logistic Regression} was introduced, with a mathematical model that actually restricts the dependent variable value in the range $[0,1]$. In reality, the model is estimating \textit{the probability} of a categorical outcome, i.e. the likelihood of one discrete output result versus another. The general Logistic Regression formula for two outcomes (0 or 1) can be written as \[P(Y=1) = \frac{1}{1+e^-(a_0+\sum a_i x_i)}\]
@@ -176,67 +176,61 @@ After this last step, the classifier is ready to be trained. The selected featur
 
 After learning is completed, the validation dataset is loaded and some data manipulation is performed, as described above. Subsequently, the model is used to calculate CTR predictions for every impression in the validation dataset and store them in an in-memory array. The real-time bidding simulation can then be performed, and its results evaluated.
 
-\begin{figure}
-  \includegraphics[width=\linewidth]{linear_bids.png}
-  \caption{Base bid vs. Placed bids}
-  \label{fig:bids}
-\end{figure}
-
-\begin{figure}
-  \includegraphics[width=\linewidth]{linear_wins.png}
-  \caption{Base bid vs. Wins}
-  \label{fig:bids}
-\end{figure}
-
-\begin{figure}
-  \includegraphics[width=\linewidth]{linear_clicks.png}
-  \caption{Base bid vs. Clicks}
-  \label{fig:bids}
-\end{figure}
-
-\begin{figure}
-  \includegraphics[width=\linewidth]{linear_CTR.png}
-  \caption{Base bid vs. CTR}
-  \label{fig:bids}
-\end{figure}
-
-\begin{figure}
-  \includegraphics[width=\linewidth]{linear_CPM.png}
-  \caption{Base bid vs. CPM}
-  \label{fig:bids}
-\end{figure}
-
-\begin{figure}
-  \includegraphics[width=\linewidth]{linear_CPC.png}
-  \caption{Base bid vs. CPC}
-  \label{fig:bids}
-\end{figure}
-
 \subsubsection{Linear Bidding Strategy}
 
-In this linear model strategy, the bidding price for a given impression is proportional to its predicted CTR. Specifially, the formula can be written as $bid = C * (pCTR / avg CTR) $, where C is a constant that we'll refer to as the \textit{base bid}. Conceptually, the base bid would be the bid price for an impression with average CTR, i.e. for which the ratio $pCTR / avg CTR$ is $1$. For impressions with higher-than-average predicted CTR, the ratio would be over 1 and the base bid would be proportionally higher than the value of the base bid.
+In this linear bidding strategy, the bidding price for a given impression is proportional to its predicted CTR. Specifically, the formula can be written as $bid = C * (pCTR / avg CTR) $, where C is a constant that we'll refer to as the \textit{base bid}. Conceptually, the base bid would be the bid price for an impression with average CTR, i.e. for which the ratio $pCTR / avg CTR$ is $1$. For impressions with higher-than-average predicted CTR, the ratio would be over 1 and the base bid would be proportionally higher than the value of the base bid.
 
-The first step was to calculate the mean CTR by averaging the value of the 'click' field in the training dataset. To decide on a good value for the constant \textit{base bid}, we varied the base bid value in the range $[0, 50]$ and ran the evaluation process numerous times. The results appear in Figures 9 through 14.
+Employing the machine learning strategy discussed in Section \ref{ml}, with a non-click:click ratio of 10:1, only one parameter required tuning: base bid. Our goal was to optimize the linear bidding strategy over both the number of clicks and the CTR; focusing on both measures prevents the strategy from simply bidding on everything to maximize the number of clicks, as this will reduce our CTR. Figures \ref{clicksbb} and \ref{ctrbb} show the relationship between base bid and clicks, and base bid and CTR, respectively. Figures \ref{clicksbb} and \ref{ctrbb} reveal that a base bid between 25 and 75 optimizes both clicks and CTR. Narrowing our base bid to this range, we found that the optimal base bid is 41 (Figures \ref{clicksbbs} and \ref{ctrbbs}).
 
-Figures 9 and 10 plot the base bid against the number of bids placed and the number of bids won respectively. The two graphs are compatible: for small base bid values, the whole budget never gets spent, s othe number of bids placed is constant and equal to the total number of impressions in the dataset, as evidence by the linear horizontal trend in Figure 9. Since the base bid is small, the corresponding range in Figure 10 shows an increasing trend in wins, as increasing the base bid leads to more percentage of the budget being spent, and thus more wins. After the threshold value of 7, where the global maximum of Figure 10 is observed,  the trend in both graphs becomes asymptotically decreasing. The whole budget is now being spent, and an increasing base bid implies more expensive - and thus less - auctions being won.
+The results for this base bid are provided below:
 
-Figures 11 and 12 plot the absolute number of clicks and click-through rate percentages respectively, for the same range of base bids as figures 9 and 10. As expected, for very small base bids, no clicks are observed. Interestingly, the maximum CTR of the solution is the first non-zero data point, where $base bid = 5$. Eight conversions are achieved with the particular value, for a reasonably high CTR value of $0.263\%$, the peak of the CTR plot. The trend of figure 11 is strictly non-increasing from that point on, whereas in figure 12 several local maxima are observed. Above a base bid value of $9$, however, the CTR consistently remains under $0.1\%$.
+\begin{table}[h!]
+\centering
+\caption{Linear Strategy Results}
+\begin{tabular}{|c|l|} \hline
+\textbf{Statistic}&\textbf{Value}\\ \hline
+Click-Through Rate&0.00121\\ \hline
+Conversions&108\\ \hline
+Spend&4,856.51\\ \hline
+Average CPM&54.63\\ \hline
+Average CPC&44.97\\
+\hline\end{tabular}
+\end{table}
 
-Finally, figures 13 and 14 present money-related metrics, namely CPM and CPC as functions of the base bid. The most cost-efficient point seems to be the one with highest CTR, namely $base bid = 5$, where $CPM = 4.33$ and $CPC = 1642$. The trend in each figure is non-decreasing, which makes intuitive sense. Accoording to figures 10 and 11, both the number of wins and the number of clicks are decreasing as the base bid increases. Therefore, since the whole budget is spent, both the cost per million impressions and the average cost per click must be increasing.
+\begin{figure}[h!]
+  \includegraphics[width=\linewidth]{linear_clicks.png}
+  \caption{Base Bid vs. Clicks}
+  \label{clicksbb}
+\end{figure}
 
-For the determined optimal base bid value of $5$, we were quite satisfied with the results of our linear model. The CTR rate $0.263\%$, or more that 2 per 1000 ads being clicked, was better performance than we expected from a linear model solution. Of course, this performance constitutes a $10^3$ order of magnitude improvement over the approaches in section 4.1. It's already clear that CTR prediction through supervised learning is a huge step forward in developing successful and efficient strategies for real-time bidding.
+\begin{figure}[h!]
+  \includegraphics[width=\linewidth]{linear_CTR.png}
+  \caption{Base Bid vs. CTR}
+  \label{ctrbb}
+\end{figure}
+
+\begin{figure}[h!]
+  \includegraphics[width=\linewidth]{linear_clicks_specific.png}
+  \caption{Base Bid vs. Wins --- Narrowed Range}
+  \label{clicksbbs}
+\end{figure}
+
+\begin{figure}[h!]
+  \includegraphics[width=\linewidth]{linear_CTR_specific.png}
+  \caption{Base Bid vs. CTR--- Narrowed Range}
+  \label{ctrbbs}
+\end{figure}
 
 \subsubsection{Non-linear Bidding Strategy}
 
-The process that we used in our non-linear strategy for making CTR predictions is detailed above. The non-linear equation that we used was the ORTB1 strategy\footnote{http://wnzhang.net/papers/ortb-kdd.pdf}, which uses the following equation:
+The process that we used in our non-linear strategy for learning pCTRs can be found in our machine learning strategies section. The strategy equation that we used was the ORTB1 strategy\footnote{http://wnzhang.net/papers/ortb-kdd.pdf}, which uses the following equation:
 \begin{equation}\sqrt{\frac{c\theta}{\lambda}+c^2}-c\end{equation}
 where $\lambda$ is the langrangian multiplier, $c$ is a constant, and $\theta$ is
-the calculated pCTR value. Through trial and error, the best settings for the tunable values that I determined for my configuration were $\lambda=5*10^{-6}$ and
-$c=200$. The ratio of clicked to non-clicked impressions used after our undersampling process was about 30,
-and weight clicks 20 times as much in our learning process.
+the input pCTR value. Through trial and error, the best values for the tunable variables determined by our configuration were $\lambda=5*10^{-6}$ and
+$c=200$. We use 30 times as many nonclicks as clicks in our undersampling process,
+and weight clicks 20 times as much in our learning process. The results and evaluation metrics are detailed in Table 2.
 
-The results that are showed in the included table.
-\begin{table}
+\begin{table}[h!]
 \centering
 \caption{Non-linear Strategy Results}
 \begin{tabular}{|c|l|} \hline
@@ -248,12 +242,14 @@ Average CPM&82.292757\\ \hline
 Average CPC&72.210370\\
 \hline\end{tabular}
 \end{table}
-The strategy that we used could have achieved more clicks if desired, but we chose to optimise for click through rate. We only
-use about half of our budget, and managed to keep average CPM and CPC fairly low in the process.
+
+The strategy that we used could have achieved more clicks if desired, but we chose to optimise mainly for click-through rate. We only used about half of our budget, and managed to keep average CPM and CPC fairly low in the process.
 
 \section{Conclusion}
 
-[TODO]
+Real-time bidding strategies for online auctions are dynamic solutions, relying heavily on both a strong machine learning algorithm, as well as a bidding strategy that is reflective of the data. Even with incredibly imbalanced data and anonymized attributes, which limited the amount of feature manipulation possible, utilizing the correct machine learning algorithm was essential to the performance (measured by both number of clicks and CTR) of our final strategy. By using a \textit{Forest Classifier} rather than a \textit{Logisitc Regression Classifier}, we were able to create a larger discrepancy between click and non-click CTR's improving. Pairing the improved pCTR prediction with a non-linear model, which was more reflective of the right-skewed payprice distribution of bids than constant, random, or linear, we were able to dramatically increase the number of bids won at the lower end of the price spectrum.  The combination of these changes enabled us to increase the number of clicks by 81, while only reducing our CTR by 0.00007.
+
+Having explored multiple classification algorithms, next steps would be to improve our undersampling method.  While random undersampling is a strong starting place, there is a sizable amount of research into alternative data sampling methods. Most intriguing based upon our class imbalance problem is SMOTE, which generates artificial minority-class data based upon the relevant feature space of the minority class. Thus, SMOTE is able to increase the total amount of training data available, improving the model, even for real-world situations where data imbalance is inevitable.
 
 \begin{thebibliography}{4}
 \bibitem{RTB}
