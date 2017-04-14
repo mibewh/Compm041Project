@@ -1,4 +1,5 @@
 \documentclass{sig-alternate-05-2015}
+\usepackage{hyperref}
 \makeatletter
 \def\@copyrightspace{\relax}
 \makeatother
@@ -254,6 +255,10 @@ The strategy that we used could have achieved more clicks if desired, but we cho
 Real-time bidding strategies for online auctions are dynamic solutions, relying heavily on both a strong machine learning algorithm, as well as a bidding strategy that is reflective of the data. Even with incredibly imbalanced data and anonymized attributes, which limited the amount of feature manipulation possible, utilizing the correct machine learning algorithm was essential to the performance (measured by both number of clicks and CTR) of our final strategy. By using a \textit{Forest Classifier} rather than a \textit{Logisitc Regression Classifier}, we were able to create a larger discrepancy between click and non-click CTR's improving. Pairing the improved pCTR prediction with a non-linear model, which was more reflective of the right-skewed payprice distribution of bids than constant, random, or linear, we were able to dramatically increase the number of bids won at the lower end of the price spectrum.  The combination of these changes enabled us to increase the number of clicks by 81, while only reducing our CTR by 0.00007.
 
 Having explored multiple classification algorithms, next steps would be to improve our undersampling method.  While random undersampling is a strong starting place, there is a sizable amount of research into alternative data sampling methods. Most intriguing based upon our class imbalance problem is SMOTE, which generates artificial minority-class data based upon the relevant feature space of the minority class. Thus, SMOTE is able to increase the total amount of training data available, improving the model, even for real-world situations where data imbalance is inevitable.
+
+\subsection{Github}
+The relevant code that we used in making our strategy and evaluated in this report can be found at the following link:
+\url{https://github.com/mibewh/Compm041Project}
 
 \begin{thebibliography}{4}
 \bibitem{RTB}

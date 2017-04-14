@@ -33,10 +33,11 @@ def undersample(data, zeroMult=1):
     click_samples = data.loc[click_ind]
     return pd.concat([nonclick_samples,click_samples], ignore_index=True)
 
-def getFeatures(data, fit=False):
+def getFeatures(data, fit=False, test=False):
     global dv
     data = data.drop('bidid', axis=1) # Don't need bidid to find features
     metrics = ['click','payprice','bidprice'] # Bid price must be considered a metric because it is not present in the test data, and therefore cannot be used as a feature in the model
+    if not test: data = data.drop(metrics, axis=1)
     agent_info = pd.DataFrame(np.array([[item for item in agent.split('_')] for agent in data.useragent]), columns=['os','browser'])
     data = data.drop('useragent',axis=1).join(agent_info)
     weekend_info = pd.DataFrame(np.array([1 if 2<=int(weekday)<=4 else 0 for weekday in data.weekday]))
@@ -49,9 +50,9 @@ def getFeatures(data, fit=False):
     data['area'] = area_info
     data['mobile'] = mobile_info
     if fit:
-        vec = dv.fit_transform(data.drop(metrics, axis=1).to_dict(orient='records'))
+        vec = dv.fit_transform(data.to_dict(orient='records'))
     else:
-        vec = dv.transform(data.drop(metrics, axis=1).to_dict(orient='records'))
+        vec = dv.transform(data.to_dict(orient='records'))
     features = normalize(vec, axis=1)
     return features
 
@@ -61,15 +62,20 @@ def loadData(fileName, train=False, test=False):
     else: df = pd.read_csv(fileName, usecols=test_columns, dtype={'weekday':object,'hour':object,'region':object,'city':object,'advertiser':object})
     print('Preprocessing (%s)...' % fileName)
     if train: df = undersample(df, zeroMult=ZERO_MULT)
-    features = getFeatures(df, fit=train)
+    features = getFeatures(df, fit=train, test=test)
     return df, features
 
-def getpredictionORTB1(pCTR, avgCTR):
+def getPredictionORTB1(pCTR):
     return np.sqrt(MODEL_CONST / L * pCTR + MODEL_CONST**2) - MODEL_CONST #* mult
 
 def outputTestResults(model):
+    print('Outputting test results (%s)...' % out_file)
     test_df, test_features = loadData(testFile, train=False, test=True)
-    guesses = getPredictionsORTB1(model, test_features)
+    pCTRs = model.predict_proba(test_features)[:, 1]
+    guesses = []
+    for pCTR in pCTRs:
+        guesses.append(getPredictionORTB1(pCTR))
+    guesses = np.array(guesses)
     out_df = pd.DataFrame({'bidid': test_df['bidid'], 'bidprice': guesses})
     out_df.to_csv(out_file, index=False)
 
@@ -80,7 +86,8 @@ avgCTR = train_df['click'].mean()
 print('Learning...')
 model = RandomForestClassifier(n_estimators=100, criterion='gini', max_features='auto', class_weight={0:1,1:ONE_WEIGHT}, n_jobs=-1) #increasing the 1 weight increases both true and false positives
 model.fit(train_features, train_df.click)
-# outputTestResults(model)
+outputTestResults(model)
+# sys.exit()
 
 print('Evaluating...')
 val_df, val_features = loadData(validateFile, train=False)
@@ -92,7 +99,7 @@ clicks = 0
 spent = 0
 clicksMissed = 0
 for i in range(len(pCTR)):
-    bidAmt = getpredictionORTB1(pCTR[i], avgCTR)
+    bidAmt = getPredictionORTB1(pCTR[i])
     bid = val_df.iloc[i]
     if (spent + bidAmt) <= 25000000:
         bidsPlaced += 1
