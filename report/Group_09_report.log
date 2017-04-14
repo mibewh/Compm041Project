@@ -1,46 +1,41 @@
-<<<<<<< HEAD
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.4.5)  12 APR 2017 17:42
-=======
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.12.4)  11 APR 2017 16:15
->>>>>>> 0425af7cc6fd258f06d5645dbe3f909353a4c216
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2017.4.5)  14 APR 2017 15:07
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
 **Group_09_report.tex
 (./Group_09_report.tex
-LaTeX2e <2016/02/01>
-Babel <3.9q> and hyphenation patterns for 81 language(s) loaded.
+LaTeX2e <2016/03/31>
+Babel <3.9r> and hyphenation patterns for 22 language(s) loaded.
 (./sig-alternate-05-2015.cls
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/epsfig.sty
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/graphics/epsfig.sty
 Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
 
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks14
 )
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2016/01/03 v1.0q Standard LaTeX Graphics (DPC,SPQR)
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2016/05/09 v1.0r Standard LaTeX Graphics (DPC,SPQR)
 
-(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
 )
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/graphics.cfg
-File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/01/02 v1.10 sample graphics configuration
 )
-Package graphics Info: Driver file: pdftex.def on input line 95.
+Package graphics Info: Driver file: pdftex.def on input line 96.
 
-(/usr/share/texlive/texmf-dist/tex/latex/pdftex-def/pdftex.def
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/infwarerr.sty
-Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
+(/usr/local/texlive/2016basic/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
 )
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
-Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
+(/usr/local/texlive/2016basic/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 )
 \Gread@gobject=\count79
 ))
@@ -50,10 +45,10 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \epsfxsize=\dimen104
 \epsfysize=\dimen105
 )
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \@emptytoks=\toks15
 \symAMSa=\mathgroup4
@@ -61,25 +56,25 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2016/03/03 v2.15a AMS math features
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2016/03/10 v2.15b AMS math features
 \@mathmargin=\skip41
 
 For additional information on amsmath, use the `?' option.
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2000/06/29 v2.01 AMS text
 
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks16
 \ex@=\dimen106
 ))
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen107
 )
-(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
-Package: amsopn 1999/12/14 v2.01 operator names
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
 )
 \inf@bad=\count80
 LaTeX Info: Redefining \frac on input line 199.
@@ -94,8 +89,8 @@ LaTeX Info: Redefining \cdots on input line 518.
 \Mathstrutbox@=\box26
 \strutbox@=\box27
 \big@size=\dimen108
-LaTeX Font Info:    Redeclaring font encoding OML on input line 630.
-LaTeX Font Info:    Redeclaring font encoding OMS on input line 631.
+LaTeX Font Info:    Redeclaring font encoding OML on input line 634.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 635.
 \macc@depth=\count85
 \c@MaxMatrixCols=\count86
 \dotsspace@=\muskip10
@@ -116,8 +111,8 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 631.
 \multlinegap=\skip42
 \multlinetaggap=\skip43
 \mathdisplay@stack=\toks20
-LaTeX Info: Redefining \[ on input line 2735.
-LaTeX Info: Redefining \] on input line 2736.
+LaTeX Info: Redefining \[ on input line 2739.
+LaTeX Info: Redefining \] on input line 2740.
 )
 Document Class 'sig-alternate' <9th June '13>. Modified by G.K.M. Tobin/Gerry M
 urray/Boris Veytsman
@@ -136,9 +131,8 @@ Questions on the style, SIGS policies, etc. to Adrienne Griscti griscti@acm.org
 \@maxsep=\dimen116
 \@dblmaxsep=\dimen117
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifpdf.sty
-Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
-Package ifpdf Info: pdfTeX in PDF mode is detected.
+(/usr/local/texlive/2016basic/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+Package: ifpdf 2016/05/14 v3.1 Provides the ifpdf switch
 )
 \aucount=\count93
 \originalaucount=\count94
@@ -163,7 +157,7 @@ LaTeX Warning: You have requested document class `sig-alternate-05-2015',
 
 Document Class: sig-alternate 2013/05/12 v2.7 based on acmproc.cls V1.3 <Nov. 3
 0 '99>
-(/usr/share/texlive/texmf-dist/tex/latex/base/latexsym.sty
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/base/latexsym.sty
 Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
 \symlasy=\mathgroup6
 LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
@@ -194,17 +188,18 @@ LaTeX Info: Redefining \cite on input line 1408.
 \copyrtyr=\toks32
 \acmcopyr=\toks33
 \boilerplate=\toks34
-(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip11
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
-) (./acmcopyright.sty
+)
+(./acmcopyright.sty
 Package: acmcopyright 2014/06/29 v1.2 Copyright statemens for ACM classes
 
-(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/xkeyval/xkeyval.sty
 Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
 
-(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
-(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+(/usr/local/texlive/2016basic/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2016basic/texmf-dist/tex/generic/xkeyval/xkvutils.tex
 \XKV@toks=\toks35
 \XKV@tempa@toks=\toks36
 )
@@ -213,18 +208,25 @@ File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 )))
 \copyrightetc=\toks37
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/t1enc.def
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/base/t1enc.def
 File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
 )
 LaTeX Font Info:    Try loading font information for T1+aer on input line 105.
 
-(/usr/share/texlive/texmf-dist/tex/latex/ae/t1aer.fd
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/ae/t1aer.fd
 File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
-))) (./Group_09_report.aux
+)))
+(./Group_09_report.aux
+
+LaTeX Warning: Label `fig:CPM' multiply defined.
+
+
+LaTeX Warning: Label `fig:CPM' multiply defined.
+
 
 LaTeX Warning: Label `fig:bids' multiply defined.
 
@@ -233,6 +235,12 @@ LaTeX Warning: Label `fig:wins' multiply defined.
 
 
 LaTeX Warning: Label `fig:clicks' multiply defined.
+
+
+LaTeX Warning: Label `fig:CPM' multiply defined.
+
+
+LaTeX Warning: Label `fig:CPM' multiply defined.
 
 
 LaTeX Warning: Label `fig:CPM' multiply defined.
@@ -270,7 +278,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 5.
 LaTeX Font Info:    ... okay on input line 5.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 5.
 LaTeX Font Info:    ... okay on input line 5.
- (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
+ (/usr/local/texlive/2016basic/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count111
 \scratchdimen=\dimen123
@@ -283,12 +291,12 @@ LaTeX Font Info:    ... okay on input line 5.
 \MPnumerator=\count115
 \makeMPintoPDFobject=\count116
 \everyMPtoPDFconversion=\toks39
-) (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
-Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+) (/usr/local/texlive/2016basic/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+Package: pdftexcmds 2016/05/10 v0.21 Utility functions of pdfTeX for LuaTeX (HO
 )
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/ifluatex.sty
-Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+(/usr/local/texlive/2016basic/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+Package: ifluatex 2016/05/16 v1.4 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
 )
 Package pdftexcmds Info: LuaTeX not detected.
@@ -296,23 +304,22 @@ Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
 )
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
-Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/grfext.sty
-Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/oberdiek/grfext.sty
+Package: grfext 2016/05/16 v1.2 Manage graphics extensions (HO)
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
-Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
-))
-(/usr/share/texlive/texmf-dist/tex/latex/oberdiek/kvoptions.sty
-Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+(/usr/local/texlive/2016basic/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+Package: kvdefinekeys 2016/05/16 v1.4 Define keys (HO)
+)) (/usr/local/texlive/2016basic/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
-Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+(/usr/local/texlive/2016basic/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+Package: kvsetkeys 2016/05/16 v1.17 Key value parser (HO)
 
-(/usr/share/texlive/texmf-dist/tex/generic/oberdiek/etexcmds.sty
-Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+(/usr/local/texlive/2016basic/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+Package: etexcmds 2016/05/16 v1.6 Avoid name clashes with e-TeX commands (HO)
 Package etexcmds Info: Could not find \expanded.
 (etexcmds)             That can mean that you are not using pdfTeX 1.50 or
 (etexcmds)             that some package has redefined \expanded.
@@ -321,25 +328,24 @@ Package etexcmds Info: Could not find \expanded.
 Package grfext Info: Graphics extension search list:
 (grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
 G,.JBIG2,.JB2,.eps]
-(grfext)             \AppendGraphicsExtensions on input line 452.
+(grfext)             \AppendGraphicsExtensions on input line 456.
 
-(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 LaTeX Font Info:    Try loading font information for U+msa on input line 28.
-
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+ (/usr/local/texlive/2016basic/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Try loading font information for U+msb on input line 28.
 
-(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Try loading font information for U+lasy on input line 28.
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/ulasy.fd
+(/usr/local/texlive/2016basic/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
 Overfull \hbox (9.88249pt too wide) in paragraph at lines 28--28
@@ -349,167 +355,180 @@ Overfull \hbox (9.88249pt too wide) in paragraph at lines 28--28
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
+ [1{/usr/local/texlive/2016basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
 ]
-<Bids.png, id=11, 1191.45125pt x 717.68124pt>
-File: Bids.png Graphic file (type png)
- <use Bids.png>
-Package pdftex.def Info: Bids.png used on input line 60.
-(pdftex.def)             Requested size: 240.0pt x 144.56308pt.
+<constant_bids.png, id=11, 1192.455pt x 705.63625pt>
+File: constant_bids.png Graphic file (type png)
+ <use constant_bids.png>
+Package pdftex.def Info: constant_bids.png used on input line 62.
+(pdftex.def)             Requested size: 240.0pt x 142.01842pt.
 
-<wins.png, id=13, 1188.44pt x 711.65875pt>
-File: wins.png Graphic file (type png)
- <use wins.png>
-Package pdftex.def Info: wins.png used on input line 66.
-(pdftex.def)             Requested size: 240.0pt x 143.70831pt.
-
-<click.png, id=14, 1188.44pt x 713.66624pt>
-File: click.png Graphic file (type png)
- <use click.png>
-Package pdftex.def Info: click.png used on input line 72.
-(pdftex.def)             Requested size: 240.0pt x 144.1137pt.
-
-Overfull \hbox (7.18185pt too wide) in paragraph at lines 71--73
-[]\T1/aer/m/n/9 h [] 
+Overfull \hbox (5.64291pt too wide) in paragraph at lines 61--63
+[]\T1/aer/m/n/9 t [] 
  []
 
-<CPM.png, id=15, 1196.47pt x 711.65875pt>
-File: CPM.png Graphic file (type png)
- <use CPM.png>
-Package pdftex.def Info: CPM.png used on input line 78.
-(pdftex.def)             Requested size: 240.0pt x 142.75273pt.
+<constant_wins.png, id=13, 1179.40625pt x 708.6475pt>
+File: constant_wins.png Graphic file (type png)
+ <use constant_wins.png>
+Package pdftex.def Info: constant_wins.png used on input line 68.
+(pdftex.def)             Requested size: 240.0pt x 144.20319pt.
 
-Overfull \hbox (7.18185pt too wide) in paragraph at lines 77--79
-[]\T1/aer/m/n/9 h [] 
+Overfull \hbox (5.64291pt too wide) in paragraph at lines 67--69
+[]\T1/aer/m/n/9 t [] 
  []
 
+<constant_clicks.png, id=14, 1189.44376pt x 708.6475pt>
+File: constant_clicks.png Graphic file (type png)
 
-Overfull \hbox (4.44417pt too wide) in paragraph at lines 86--87
-\T1/aer/m/n/9 plot-ted that range of prob-a-ble val-ues around the mean against
+<use constant_clicks.png>
+Package pdftex.def Info: constant_clicks.png used on input line 74.
+(pdftex.def)             Requested size: 240.0pt x 142.98131pt.
 
+Overfull \hbox (5.64291pt too wide) in paragraph at lines 73--75
+[]\T1/aer/m/n/9 t [] 
  []
 
-[2 <./Bids.png> <./wins.png> <./click.png> <./CPM.png>]
-Overfull \hbox (1.30345pt too wide) in paragraph at lines 88--89
+<constant_ctr.png, id=15, 1187.43625pt x 707.64375pt>
+File: constant_ctr.png Graphic file (type png)
+ <use constant_ctr.png>
+Package pdftex.def Info: constant_ctr.png used on input line 80.
+(pdftex.def)             Requested size: 240.0pt x 143.02713pt.
+
+Overfull \hbox (5.64291pt too wide) in paragraph at lines 79--81
+[]\T1/aer/m/n/9 t [] 
+ []
+
+[2 <./constant_bids.png> <./constant_wins.png> <./constant_clicks.png> <./const
+ant_ctr.png>]
+Overfull \hbox (1.30345pt too wide) in paragraph at lines 89--90
 []\T1/aer/m/n/9 Figures 1 and 2 show the con-stant bid value plot-ted against
  []
 
-<random_bids.png, id=27, 1196.47pt x 712.6625pt>
+<constant_cpm.png, id=27, 1190.4475pt x 710.655pt>
+File: constant_cpm.png Graphic file (type png)
+ <use constant_cpm.png>
+Package pdftex.def Info: constant_cpm.png used on input line 96.
+(pdftex.def)             Requested size: 240.0pt x 143.26706pt.
+
+<constant_cpc.png, id=28, 1190.4475pt x 708.6475pt>
+File: constant_cpc.png Graphic file (type png)
+ <use constant_cpc.png>
+Package pdftex.def Info: constant_cpc.png used on input line 102.
+(pdftex.def)             Requested size: 240.0pt x 142.86237pt.
+
+<random_bids.png, id=29, 1189.44376pt x 706.64pt>
 File: random_bids.png Graphic file (type png)
  <use random_bids.png>
-Package pdftex.def Info: random_bids.png used on input line 99.
-(pdftex.def)             Requested size: 240.0pt x 142.95407pt.
+Package pdftex.def Info: random_bids.png used on input line 112.
+(pdftex.def)             Requested size: 240.0pt x 142.57625pt.
 
-<random_wins.png, id=28, 1191.45125pt x 715.67375pt>
+<random_wins.png, id=30, 1188.44pt x 707.64375pt>
 File: random_wins.png Graphic file (type png)
  <use random_wins.png>
-Package pdftex.def Info: random_wins.png used on input line 105.
-(pdftex.def)             Requested size: 240.0pt x 144.15872pt.
+Package pdftex.def Info: random_wins.png used on input line 118.
+(pdftex.def)             Requested size: 240.0pt x 142.89755pt.
 
-<random_clicks.png, id=29, 1190.4475pt x 717.68124pt>
+<random_clicks.png, id=31, 1186.4325pt x 707.64375pt>
 File: random_clicks.png Graphic file (type png)
  <use random_clicks.png>
-Package pdftex.def Info: random_clicks.png used on input line 111.
-(pdftex.def)             Requested size: 240.0pt x 144.68355pt.
+Package pdftex.def Info: random_clicks.png used on input line 124.
+(pdftex.def)             Requested size: 240.0pt x 143.1459pt.
 
-<random_CPM.png, id=30, 1195.46625pt x 710.655pt>
-File: random_CPM.png Graphic file (type png)
- <use random_CPM.png>
-Package pdftex.def Info: random_CPM.png used on input line 117.
-(pdftex.def)             Requested size: 240.0pt x 142.67065pt.
- [3 <./random_bids.png> <./random_wins.png> <./random_clicks.png> <./random_CPM
-.png>]
-Underfull \vbox (badness 1565) has occurred while \output is active []
+<random_ctr.png, id=32, 1188.44pt x 711.65875pt>
+File: random_ctr.png Graphic file (type png)
+ <use random_ctr.png>
+Package pdftex.def Info: random_ctr.png used on input line 130.
+(pdftex.def)             Requested size: 240.0pt x 143.70831pt.
 
+<random_cpm.png, id=33, 1187.43625pt x 711.65875pt>
+File: random_cpm.png Graphic file (type png)
+ <use random_cpm.png>
+Package pdftex.def Info: random_cpm.png used on input line 136.
+(pdftex.def)             Requested size: 240.0pt x 143.83862pt.
 
-Underfull \vbox (badness 1668) has occurred while \output is active []
-
- [4]
-Overfull \hbox (3.17345pt too wide) in paragraph at lines 152--153
+<random_cpc.png, id=34, 1190.4475pt x 708.6475pt>
+File: random_cpc.png Graphic file (type png)
+ <use random_cpc.png>
+Package pdftex.def Info: random_cpc.png used on input line 142.
+(pdftex.def)             Requested size: 240.0pt x 142.86237pt.
+ [3 <./constant_cpm.png> <./constant_cpc.png> <./random_bids.png> <./random_win
+s.png>]
+[4 <./random_clicks.png> <./random_ctr.png> <./random_cpm.png> <./random_cpc.pn
+g>]
+Overfull \hbox (3.17345pt too wide) in paragraph at lines 177--178
 []\T1/aer/m/n/9 After learn-ing is com-pleted, the val-i-da-tion dataset is loa
 ded
  []
 
 
-Overfull \hbox (4.51428pt too wide) in paragraph at lines 152--153
+Overfull \hbox (4.51428pt too wide) in paragraph at lines 177--178
 \T1/aer/m/n/9 and some data ma-nip-u-la-tion is per-formed, as de-scribed above
 .
  []
 
-<linear_bids.png, id=44, 1193.45876pt x 710.655pt>
+<linear_bids.png, id=49, 1188.44pt x 707.64375pt>
 File: linear_bids.png Graphic file (type png)
  <use linear_bids.png>
-Package pdftex.def Info: linear_bids.png used on input line 155.
-(pdftex.def)             Requested size: 240.0pt x 142.90923pt.
+Package pdftex.def Info: linear_bids.png used on input line 180.
+(pdftex.def)             Requested size: 240.0pt x 142.89755pt.
 
-<linear_wins.png, id=45, 1190.4475pt x 709.65125pt>
+<linear_wins.png, id=50, 1188.44pt x 709.65125pt>
 File: linear_wins.png Graphic file (type png)
  <use linear_wins.png>
-Package pdftex.def Info: linear_wins.png used on input line 161.
-(pdftex.def)             Requested size: 240.0pt x 143.06471pt.
+Package pdftex.def Info: linear_wins.png used on input line 186.
+(pdftex.def)             Requested size: 240.0pt x 143.30293pt.
 
-<linear_clicks.png, id=46, 1191.45125pt x 711.65875pt>
+<linear_clicks.png, id=51, 1189.44376pt x 706.64pt>
 File: linear_clicks.png Graphic file (type png)
  <use linear_clicks.png>
-Package pdftex.def Info: linear_clicks.png used on input line 167.
-(pdftex.def)             Requested size: 240.0pt x 143.34998pt.
+Package pdftex.def Info: linear_clicks.png used on input line 192.
+(pdftex.def)             Requested size: 240.0pt x 142.57625pt.
 
-<linear_CTR.png, id=47, 1188.44pt x 708.6475pt>
+<linear_CTR.png, id=52, 1186.4325pt x 706.64pt>
 File: linear_CTR.png Graphic file (type png)
  <use linear_CTR.png>
-Package pdftex.def Info: linear_CTR.png used on input line 173.
-(pdftex.def)             Requested size: 240.0pt x 143.10025pt.
+Package pdftex.def Info: linear_CTR.png used on input line 198.
+(pdftex.def)             Requested size: 240.0pt x 142.94286pt.
 
-<linear_CPM.png, id=48, 1188.44pt x 713.66624pt>
+<linear_CPM.png, id=53, 1188.44pt x 706.64pt>
 File: linear_CPM.png Graphic file (type png)
  <use linear_CPM.png>
-Package pdftex.def Info: linear_CPM.png used on input line 179.
-(pdftex.def)             Requested size: 240.0pt x 144.1137pt.
+Package pdftex.def Info: linear_CPM.png used on input line 204.
+(pdftex.def)             Requested size: 240.0pt x 142.69485pt.
 
-<linear_CPC.png, id=49, 1187.43625pt x 710.655pt>
+<linear_CPC.png, id=54, 1185.42876pt x 705.63625pt>
 File: linear_CPC.png Graphic file (type png)
  <use linear_CPC.png>
-Package pdftex.def Info: linear_CPC.png used on input line 185.
-(pdftex.def)             Requested size: 240.0pt x 143.63576pt.
+Package pdftex.def Info: linear_CPC.png used on input line 210.
+(pdftex.def)             Requested size: 240.0pt x 142.85825pt.
 
-Overfull \hbox (10.6456pt too wide) in paragraph at lines 192--193
+Overfull \hbox (10.6456pt too wide) in paragraph at lines 217--218
 \T1/aer/m/n/9 sion with av-er-age CTR, i.e. for which the ra-tio $\OML/cmm/m/it
 /9 pCTR=avgCTR$
  []
 
-[5 <./linear_bids.png> <./linear_wins.png> <./linear_clicks.png> <./linear_CTR.
-png> <./linear_CPM.png>]
-Overfull \hbox (5.35112pt too wide) in paragraph at lines 198--199
+[5 <./linear_bids.png> <./linear_wins.png>]
+Overfull \hbox (5.35112pt too wide) in paragraph at lines 223--224
 \T1/aer/m/n/9 click-through rate per-cent-ages re-spec-tively, for the same ran
 ge
  []
 
-
-Underfull \vbox (badness 1616) has occurred while \output is active []
-
- [6 <./linear_CPC.png>] (./Group_09_report.aux)
+[6 <./linear_clicks.png> <./linear_CTR.png> <./linear_CPM.png> <./linear_CPC.pn
+g>] [7] (./Group_09_report.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
-<<<<<<< HEAD
- 3202 strings out of 494447
- 41885 string characters out of 6166767
- 112024 words of memory out of 5000000
- 6437 multiletter control sequences out of 15000+600000
-=======
- 3172 strings out of 493029
- 40408 string characters out of 6136234
- 115716 words of memory out of 5000000
- 6615 multiletter control sequences out of 15000+600000
->>>>>>> 0425af7cc6fd258f06d5645dbe3f909353a4c216
+ 3224 strings out of 494447
+ 42458 string characters out of 6166767
+ 112028 words of memory out of 5000000
+ 6455 multiletter control sequences out of 15000+600000
  50604 words of font info for 68 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
+ 319 hyphenation exceptions out of 8191
  41i,10n,35p,1129b,274s stack positions out of 5000i,500n,10000p,200000b,80000s
-<<<<<<< HEAD
 {/usr/local/texlive/2016basic/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/lo
 cal/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr
 /local/texlive/2016basic/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.p
@@ -525,25 +544,10 @@ helvetic/uhvb8a.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/urw/he
 lvetic/uhvr8a.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/urw/time
 s/utmb8a.pfb></usr/local/texlive/2016basic/texmf-dist/fonts/type1/urw/times/utm
 ri8a.pfb>
-Output written on Group_09_report.pdf (6 pages, 406662 bytes).
-=======
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
-e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/share/texlive/texmf
--dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texlive/texmf-dist/fonts/type
-1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmr9.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
-ti9.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/urw/times/utmri8a.pfb>
-Output written on Group_09_report.pdf (5 pages, 306275 bytes).
->>>>>>> 0425af7cc6fd258f06d5645dbe3f909353a4c216
+Output written on Group_09_report.pdf (7 pages, 586444 bytes).
 PDF statistics:
- 105 PDF objects out of 1000 (max. 8388607)
- 55 compressed objects within 1 object stream
+ 118 PDF objects out of 1000 (max. 8388607)
+ 59 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 71 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 91 words of extra memory for PDF output out of 10000 (max. 10000000)
 
